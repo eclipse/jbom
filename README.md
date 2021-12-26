@@ -3,20 +3,21 @@
 <p align="center"><b>
 <br>
 <br>
-BOM-Voyage is an instrumentation-based security tool to help teams generate<br>
-Software Bill of Materials (SBOMs) for all Java applications running on a remote host.
+'JB on' is an instrumentation-based security tool to help teams generate<br>
+Software Bill of Materials (SBOMs) for all Java applications running on a host.
 <br>
 <br>
 </b></p>
 
-BOM-Voyage:
-* x
-* y
-* z
+Advantages:
+* finds all libraries, even if they come from the platform, appserver, plug-in, or dynamically loaded source.
+* only identifies libraries present in running application/API
+* handles nested jar, war, ear, and zip files
+* no source code required
+* very fast
+* produces standard CycloneDX SBOM in JSON format
 
-BOM-Voyage is accurate because....
-
-![safelog4j-screenshot](https://github.com/Contrast-Security-OSS/bom-voyage/blob/main/resources/bom-voyage-screenshot.png?raw=true)
+![jbom-screenshot](https://github.com/Contrast-Security-OSS/jbom/blob/main/resources/jbom-screenshot.png?raw=true)
 
 
 ## Why should you use instrumentation-based security tools
@@ -39,14 +40,11 @@ Remember, you may be getting false results from other approaches. Scanning file 
 ## Attaching to a running JVM with safelog4j...
 
   ```shell
-  curl -O https://github.com/Contrast-Security-OSS/safelog4j/releases/download/v1.0.0/safelog4j-1.0.0.jar
-  java -javaagent:bom-voyage-1.0.0.jar
+  ssh hostname
+  curl -O https://github.com/Contrast-Security-OSS/jbom/releases/download/v1.0.0/jbom-1.0.0.jar
+  java -javaagent:jbom-1.0.0.jar
+  cat sbom.json
   ```
-
-
-## BOM-Voyage Options
-
-* 
 
 
 ## Building and Contributing
@@ -56,7 +54,7 @@ We welcome pull requests and issues. Thanks!
    ```shell
    git clone 
    mvn clean install
-   java -jar target/bom-voyage-x.x.x.jar
+   java -jar target/jbom-x.x.x.jar
    ``` 
 
 
