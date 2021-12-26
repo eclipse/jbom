@@ -4,10 +4,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.contrastsecurity</groupId>
-	<artifactId>bom-voyage</artifactId>
+	<artifactId>jbom</artifactId>
 	<version>1.0.0</version>
 
-	<name>bom-voyage</name>
+	<name>jbom</name>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -27,6 +27,16 @@
 			<groupId>net.bytebuddy</groupId>
 			<artifactId>byte-buddy-agent</artifactId>
 			<version>1.12.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-model</artifactId>
+  			<version>3.8.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.cyclonedx</groupId>
+			<artifactId>cyclonedx-core-java</artifactId>
+			<version>5.0.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun</groupId>
@@ -83,12 +93,12 @@
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<manifestEntries>
 										<Main-Class>com.contrastsecurity.App</Main-Class>
-										<Premain-Class>com.contrastsecurity.BOMVoyage</Premain-Class>
-										<Agent-Class>com.contrastsecurity.BOMVoyage</Agent-Class>
+										<Premain-Class>com.contrastsecurity.Jbom</Premain-Class>
+										<Agent-Class>com.contrastsecurity.Jbom</Agent-Class>
 										<Can-Redefine-Classes>true</Can-Redefine-Classes>
 										<Can-Retransform-Classes>true</Can-Retransform-Classes>
 										<Can-Set-Native-Method-Prefix>false</Can-Set-Native-Method-Prefix>
-										<Boot-Class-Path>bom-voyage-${project.version}.jar</Boot-Class-Path>
+										<Boot-Class-Path>jbom-${project.version}.jar</Boot-Class-Path>
 									</manifestEntries>
 								</transformer>
 							</transformers>

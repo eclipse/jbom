@@ -1,0 +1,1043 @@
+{
+  "bomFormat" : "CycloneDX",
+  "specVersion" : "1.3",
+  "serialNumber" : "cbf6f1f0-39e0-4be6-9050-6bb416e1fd3b",
+  "version" : 1,
+  "metadata" : {
+    "timestamp" : "2021-12-26T18:30:58Z",
+    "tools" : [
+      {
+        "vendor" : "Contrast Security - https://contrastsecurity.com",
+        "name" : "jbom - https://github.com/Contrast-Security-OSS/jbom"
+      }
+    ],
+    "component" : {
+      "name" : "Jeff’s-MacBook-Pro",
+      "description" : "Java",
+      "type" : "application"
+    },
+    "manufacture" : {
+      "name" : "Unknown"
+    }
+  },
+  "components" : [
+    {
+      "group" : "com.fasterxml.jackson.core",
+      "name" : "jackson-annotations",
+      "version" : "2.12.5",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "a09b3eef2766eeff04829294720777b3"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "52d929d5bb21d0186fe24c09624cc3ee4bafc3b3"
+        }
+      ],
+      "purl" : "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.12.5",
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "jackson-annotations-2.12.5.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:52d929d5bb21d0186fe24c09624cc3ee4bafc3b3"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "group" : "com.fasterxml.jackson.core",
+      "name" : "jackson-core",
+      "version" : "2.12.5",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "b24f3a25bc033352f1c3ab2c683b926c"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "725e364cc71b80e60fa450bd06d75cdea7fb2d59"
+        }
+      ],
+      "purl" : "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.12.5",
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "jackson-core-2.12.5.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:725e364cc71b80e60fa450bd06d75cdea7fb2d59"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "group" : "com.fasterxml.jackson.core",
+      "name" : "jackson-databind",
+      "version" : "2.12.5",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "b15f54d32247ba1a3c4f3aa35f761826"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "b064cf057f23d3d35390328c5030847efeffedde"
+        }
+      ],
+      "purl" : "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.12.5",
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "jackson-databind-2.12.5.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:b064cf057f23d3d35390328c5030847efeffedde"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "group" : "com.fasterxml.jackson.datatype",
+      "name" : "jackson-datatype-jdk8",
+      "version" : "2.12.5",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "3b2b8f0a1612ec9e94d5823c1d01df2a"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "6b2f79547d217ad50dfc5b57af7444a3aa583b43"
+        }
+      ],
+      "purl" : "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jdk8@2.12.5",
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "jackson-datatype-jdk8-2.12.5.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:6b2f79547d217ad50dfc5b57af7444a3aa583b43"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "group" : "com.fasterxml.jackson.datatype",
+      "name" : "jackson-datatype-jsr310",
+      "version" : "2.12.5",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "7d52861e175f974b5028b0c9a187f233"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "a0a9870b681a72789c5c6bdc380e45ab719c6aa3"
+        }
+      ],
+      "purl" : "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.12.5",
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "jackson-datatype-jsr310-2.12.5.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:a0a9870b681a72789c5c6bdc380e45ab719c6aa3"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "group" : "com.fasterxml.jackson.module",
+      "name" : "jackson-module-parameter-names",
+      "version" : "2.12.5",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "c472f1b1eaa76fc6f454b4e1e348ed88"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "2c85c2036d0851425a260c01eb5f7ddbed1eeb00"
+        }
+      ],
+      "purl" : "pkg:maven/com.fasterxml.jackson.module/jackson-module-parameter-names@2.12.5",
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "jackson-module-parameter-names-2.12.5.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:2c85c2036d0851425a260c01eb5f7ddbed1eeb00"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "group" : "org.glassfish",
+      "name" : "jakarta.annotation-api-1.3.5",
+      "version" : "1.3.5",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "8b165cf58df5f8c2a222f637c0a07c97"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "59eb84ee0d616332ff44aba065f3888cf002cd2d"
+        }
+      ],
+      "purl" : "pkg:maven/org.glassfish/jakarta.annotation-api-1.3.5@1.3.5",
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "jakarta.annotation-api-1.3.5.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:59eb84ee0d616332ff44aba065f3888cf002cd2d"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "jul-to-slf4j",
+      "version" : "1.7.32",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "cf36bbee73d82b6b96a6414ef9f54df1"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "8a055c04ab44e8e8326901cadf89080721348bdb"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "jul-to-slf4j-1.7.32.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:8a055c04ab44e8e8326901cadf89080721348bdb"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "group" : "org.apache.logging.log4j",
+      "name" : "log4j-api",
+      "version" : "2.14.1",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "6f31a3b90c3eb09fb0dc0aef155a001c"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "cd8858fbbde69f46bce8db1152c18a43328aae78"
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.logging.log4j/log4j-api@2.14.1",
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "log4j-api-2.14.1.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:cd8858fbbde69f46bce8db1152c18a43328aae78"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "group" : "org.apache.logging.log4j",
+      "name" : "log4j-core",
+      "version" : "2.14.1",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "948dda787593340a7af1a18e328b7b7f"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "9141212b8507ab50a45525b545b39d224614528b"
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1",
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "log4j-core-2.14.1.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:9141212b8507ab50a45525b545b39d224614528b"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "group" : "org.apache.logging.log4j",
+      "name" : "log4j-jul",
+      "version" : "2.14.1",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "0e95836c53d59e4c58f2517c70d0d612"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "8ba38040d35759986f56779c76767e437d4db626"
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.logging.log4j/log4j-jul@2.14.1",
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "log4j-jul-2.14.1.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:8ba38040d35759986f56779c76767e437d4db626"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "group" : "org.apache.logging.log4j",
+      "name" : "log4j-slf4j-impl",
+      "version" : "2.14.1",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "445787032b78277ea634ddff2b4b0207"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "9a40554b8dab7ac9606089c87ae8a5ba914ec932"
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.logging.log4j/log4j-slf4j-impl@2.14.1",
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "log4j-slf4j-impl-2.14.1.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:9a40554b8dab7ac9606089c87ae8a5ba914ec932"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "myproject-0.0.1-SNAPSHOT",
+      "version" : "SNAPSHOT",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "SHA-1",
+          "content" : "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        },
+        {
+          "alg" : "MD5",
+          "content" : "d41d8cd98f00b204e9800998ecf8427e"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "/Users/jeffwilliams/Downloads/log4j demo"
+        },
+        {
+          "name" : "jar",
+          "value" : "myproject-0.0.1-SNAPSHOT.jar"
+        },
+        {
+          "name" : "source",
+          "value" : "Contrast Security - https://contrastsecurity.com"
+        },
+        {
+          "name" : "tool",
+          "value" : "jbom - https://github.com/Contrast-Security-OSS/jbom"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "slf4j-api",
+      "version" : "1.7.32",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "fbcf58513bc25b80f075d812aad3e3cf"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "cdcff33940d9f2de763bc41ea05a0be5941176c3"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "slf4j-api-1.7.32.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:cdcff33940d9f2de763bc41ea05a0be5941176c3"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "group" : "org.yaml",
+      "name" : "snakeyaml",
+      "version" : "1.28",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "0fac676adf839a85e0ca7a3df05cb28b"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "7cae037c3014350c923776548e71c9feb7a69259"
+        }
+      ],
+      "purl" : "pkg:maven/org.yaml/snakeyaml@1.28",
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "snakeyaml-1.28.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:7cae037c3014350c923776548e71c9feb7a69259"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "spring-aop",
+      "version" : "5.3.13",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "90a838a495316a878ca9d941fbfe7758"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "e0fddf47af3fbbec69a403c058c23505612ca329"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "spring-aop-5.3.13.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:e0fddf47af3fbbec69a403c058c23505612ca329"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "spring-beans",
+      "version" : "5.3.13",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "b8081de4b093b3af9e1ed3bc827b4ce7"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "1d90c96b287253ec371260c35fbbea719c24bad6"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "spring-beans-5.3.13.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:1d90c96b287253ec371260c35fbbea719c24bad6"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "Spring Boot",
+      "version" : "2.5.7",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "78412db66c09018b1fb01111d7595227"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "04baa2219c115fac0fa3ebc73aa067130738879e"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "spring-boot-2.5.7.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:04baa2219c115fac0fa3ebc73aa067130738879e"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "Spring Boot AutoConfigure",
+      "version" : "2.5.7",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "7359f0f6ab4e82937ac54fd9648654a3"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "fc537c69a04d166924527780114b68c90c84cabb"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "spring-boot-autoconfigure-2.5.7.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:fc537c69a04d166924527780114b68c90c84cabb"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "Spring Boot Loader Tools",
+      "version" : "2.5.7",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "3f24adae23e1529fedffc3f9d27df3c4"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "a59bf46c1036e93531c93ea105b9790230931e01"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "spring-boot-jarmode-layertools-2.5.7.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:a59bf46c1036e93531c93ea105b9790230931e01"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "spring-context",
+      "version" : "5.3.13",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "222fd2edbe684bc76d5536de7f921ef3"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "e328db1c30ffe1c58328e4ab42cd3855a5307469"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "spring-context-5.3.13.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:e328db1c30ffe1c58328e4ab42cd3855a5307469"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "spring-core",
+      "version" : "5.3.13",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "9cbed00d1278f413f182577d942b578d"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "d2a6c3372dd337e08144f9f49f386b8ec7a8080d"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "spring-core-5.3.13.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:d2a6c3372dd337e08144f9f49f386b8ec7a8080d"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "spring-expression",
+      "version" : "5.3.13",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "ee55ec486e6117774aa459e96530e5be"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "8f7448f4fb296a92855fd0afea3375ce41061e84"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "spring-expression-5.3.13.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:8f7448f4fb296a92855fd0afea3375ce41061e84"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "spring-jcl",
+      "version" : "5.3.13",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "099c14a54c16f2ab2696203e7b686637"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "3aa15be194887fbda3912ecbb4ab6ec8dfdebdb0"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "spring-jcl-5.3.13.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:3aa15be194887fbda3912ecbb4ab6ec8dfdebdb0"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "spring-web",
+      "version" : "5.3.13",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "b7daa63b26cd3abdabd51806e67af461"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "66d95a5d2d436961b4cae036723f4c7a764fc14c"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "spring-web-5.3.13.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:66d95a5d2d436961b4cae036723f4c7a764fc14c"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "spring-webmvc",
+      "version" : "5.3.13",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "fab12cd309af6e27d1feffe3351726f1"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "cea31c85fa84dbd9f8df14a3ca62ab57c25cabe4"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "spring-webmvc-5.3.13.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:cea31c85fa84dbd9f8df14a3ca62ab57c25cabe4"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "tomcat-embed-core-9.0.55",
+      "version" : "9.0.55",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "4d1167dd28079e2967c58a81a3f63d74"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "6ab68425d34f35e93cf97e1950c2c710161d8ce1"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "tomcat-embed-core-9.0.55.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:6ab68425d34f35e93cf97e1950c2c710161d8ce1"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "tomcat-embed-el-9.0.55",
+      "version" : "9.0.55",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "827d067894f06bd692f4cb7fab225d52"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "d8b69643d1566712cf849a7e8e95c917f8aed1d3"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "tomcat-embed-el-9.0.55.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:d8b69643d1566712cf849a7e8e95c917f8aed1d3"
+        }
+      ],
+      "type" : "library"
+    },
+    {
+      "name" : "tomcat-embed-websocket-9.0.55",
+      "version" : "9.0.55",
+      "scope" : "required",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "82680670ae5c0dd9c4a379e2e24cd4fc"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "4e6dc3646d00887497bd465bc4a63bfb0a7b10ab"
+        }
+      ],
+      "properties" : [
+        {
+          "name" : "path",
+          "value" : "BOOT-INF/lib"
+        },
+        {
+          "name" : "jar",
+          "value" : "tomcat-embed-websocket-9.0.55.jar"
+        },
+        {
+          "name" : "codesource",
+          "value" : "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/"
+        },
+        {
+          "name" : "maven",
+          "value" : "https://search.maven.org/search?q=1:4e6dc3646d00887497bd465bc4a63bfb0a7b10ab"
+        }
+      ],
+      "type" : "library"
+    }
+  ]
+}

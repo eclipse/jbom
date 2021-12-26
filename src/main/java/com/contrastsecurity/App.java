@@ -9,11 +9,19 @@ import com.sun.tools.attach.VirtualMachineDescriptor;
 import net.bytebuddy.agent.ByteBuddyAgent;
 
 public class App {
-
     public static void main(String[] args){
-        System.out.println();
-        System.out.println("BOM-Voyage by Contrast Security");
-        System.out.println( "https://contrastsecurity.com" );
+        Logger.log( "" );
+		Logger.log( "                         _ __" );
+		Logger.log( "                        (_) /_  ____  ____ ___" );
+		Logger.log( "                       / / __ \\/ __ \\/ __ `__ \\" );
+		Logger.log( "                      / / /_/ / /_/ / / / / / /" );
+		Logger.log( "                   __/ /_.___/\\____/_/ /_/ /_/" );
+		Logger.log( "                  /___/" );
+		Logger.log( "        by Contrast Security - https://contrastsecurity.com" );
+		Logger.log( "" );
+		Logger.log( "jbom generates a Software Bill of Materials (SBOM) from a running JVM" );
+		Logger.log( "           https://github.com/Contrast-Security-OSS/jbom" );
+		Logger.log( "" );
 
         if ( args.length > 0 && args.length < 3 ) {
             try{
