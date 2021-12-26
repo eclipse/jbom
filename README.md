@@ -1,9 +1,9 @@
-# safelog4j
+# jbom
 
 <p align="center"><b>
 <br>
 <br>
-'JB on' is an instrumentation-based security tool to help teams generate<br>
+'jbom' is an instrumentation-based security tool to help teams generate<br>
 Software Bill of Materials (SBOMs) for all Java applications running on a host.
 <br>
 <br>
