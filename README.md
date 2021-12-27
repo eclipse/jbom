@@ -9,11 +9,11 @@ jbom generates a Software Bill of Materials (SBOM) for apps on a running JVM
 </b></p>
 
 Advantages:
-* finds all libraries, even if they come from the platform, appserver, plug-in, or dynamically loaded source.
-* only identifies libraries present in running application/API
+* fast and accurate
+* finds all libraries, including platform, appserver, plug-in, and dynamic sources.
+* doesn't report test or other libraries not present at runtime
 * handles nested jar, war, ear, and zip files
 * no source code required
-* very fast
 * produces standard CycloneDX SBOM in JSON format
 
 ![jbom-screenshot](https://github.com/Contrast-Security-OSS/jbom/blob/main/resources/jbom-screenshot.png?raw=true)
