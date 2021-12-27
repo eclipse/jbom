@@ -3,8 +3,7 @@
 <p align="center"><b>
 <br>
 <br>
-'jbom' is an instrumentation-based security tool to help teams generate<br>
-Software Bill of Materials (SBOMs) for all Java applications running on a host.
+jbom generates a Software Bill of Materials (SBOM) for apps on a running JVM
 <br>
 <br>
 </b></p>
