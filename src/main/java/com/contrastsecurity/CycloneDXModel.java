@@ -32,6 +32,7 @@ public class CycloneDXModel extends Bom {
 		Tool jbom = new Tool();
 		jbom.setName("jbom - https://github.com/Contrast-Security-OSS/jbom");
 		jbom.setVendor("Contrast Security - https://contrastsecurity.com");
+		jbom.setVersion("1.0.0");
 		meta.setTools( new ArrayList<>(Arrays.asList(jbom)) );
 		
 		String description = "Java";

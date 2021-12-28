@@ -2,3 +2,4 @@
 .DS_Store
 .vscode/
 dependency-reduced-pom.xml
+sbom.json

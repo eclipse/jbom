@@ -36,16 +36,16 @@ public class Jbom {
 		}
 		agentRunning = true;
 
-		Logger.log( "                         _ __" );
-		Logger.log( "                        (_) /_  ____  ____ ___" );
-		Logger.log( "                       / / __ \\/ __ \\/ __ `__ \\" );
-		Logger.log( "                      / / /_/ / /_/ / / / / / /" );
-		Logger.log( "                   __/ /_.___/\\____/_/ /_/ /_/" );
-		Logger.log( "                  /___/" );
-		Logger.log( "        by Contrast Security - https://contrastsecurity.com" );
+		Logger.log( "                           _ __" );
+		Logger.log( "                          (_) /_  ____  ____ ___" );
+		Logger.log( "                         / / __ \\/ __ \\/ __ `__ \\" );
+		Logger.log( "                        / / /_/ / /_/ / / / / / /" );
+		Logger.log( "                     __/ /_.___/\\____/_/ /_/ /_/" );
+		Logger.log( "                    /___/" );
+		Logger.log( "          by Contrast Security - https://contrastsecurity.com" );
 		Logger.log( "" );
-		Logger.log( "jbom generates a Software Bill of Materials (SBOM) from a running JVM" );
-		Logger.log( "           https://github.com/Contrast-Security-OSS/jbom" );
+		Logger.log( " jbom generates a Software Bill of Materials (SBOM) for apps on a running JVM" );
+		Logger.log( "              https://github.com/Contrast-Security-OSS/jbom" );
 		Logger.log( "" );
 
 		new AgentBuilder.Default()
@@ -71,6 +71,7 @@ public class Jbom {
 		.installOn(inst);
 
 		reportResults( filename );
+
 	}
 
 
@@ -89,7 +90,10 @@ public class Jbom {
 				Logger.log("Writing SBOM with " + Libraries.getLibraries().size() + " libraries");
 				CycloneDXModel sbom = new CycloneDXModel();
 				sbom.setComponents( Libraries.getLibraries() );	
-				sbom.save( filename );	
+				sbom.save( filename );
+
+				agentRunning = false;
+
 			}        
 		};
 		new Thread(thread).start();

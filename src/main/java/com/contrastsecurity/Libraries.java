@@ -30,8 +30,8 @@ import org.cyclonedx.model.Component.Scope;
 public class Libraries {
 
     private static Set<Component> invoked = new HashSet<Component>();
-    private static Set<String> addedAll = new HashSet<String>();
-    private static Set<Component> libraries = new TreeSet<Component>();
+    private static Set<String> codesourceExamined = new HashSet<String>();
+    private static Set<Component> libraries = new HashSet<Component>();
 
     public static void main( String[] args ) throws Exception {
         String url1 = "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/";
@@ -49,13 +49,16 @@ public class Libraries {
     // find containing jar file and include ALL libraries
     public static void addAllLibraries( String codesource ) {
 
-        if ( addedAll.contains( codesource ) ) {
+        if ( codesourceExamined.contains( codesource ) ) {
             return;
         }
-        
+        codesourceExamined.add( codesource );
+
         if ( !isArchive( codesource ) ) {
             return;
         }
+
+        System.out.println( "SCANNING: " + codesource );
 
         try {
             // save this lib
@@ -99,7 +102,6 @@ public class Libraries {
             Logger.log( "  CodeSource: " + codesource );
             e.printStackTrace();
         }
-        addedAll.add( codesource );
     }
 
     public static void scan( JarFile jarFile, JarInputStream jis, String codesource ) throws Exception {

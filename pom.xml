@@ -73,8 +73,8 @@
 						<configuration>
 							<relocations>
 								<relocation>
-									<pattern>com.contrastsecurity</pattern>
-									<shadedPattern>com.contrastsecurity</shadedPattern>
+									<pattern>com.fasterxml</pattern>
+									<shadedPattern>com.contrastsecurity.shaded.com.fasterxml</shadedPattern>
 								</relocation>
 								<relocation>
 									<pattern>net</pattern>
@@ -83,9 +83,6 @@
 								<relocation>
 									<pattern>org</pattern>
 									<shadedPattern>com.contrastsecurity.shaded.org</shadedPattern>
-									<excludes>
-										<exclude>org.apache.logging.**.*</exclude>
-									</excludes>
 								</relocation>
 							</relocations>
 							<transformers>
