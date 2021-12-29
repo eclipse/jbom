@@ -21,6 +21,7 @@ import java.util.jar.Manifest;
 
 import com.github.packageurl.PackageURL;
 
+import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.cyclonedx.model.Component;
@@ -29,21 +30,20 @@ import org.cyclonedx.model.Component.Scope;
 
 public class Libraries {
 
-    private static Set<Component> invoked = new HashSet<Component>();
-    private static Set<String> codesourceExamined = new HashSet<String>();
-    private static Set<Component> libraries = new HashSet<Component>();
+    private static Set<Component> invoked = new HashSet<>();
+    private static Set<String> codesourceExamined = new HashSet<>();
+    private static Set<Component> libraries = new HashSet<>();
+    private static Set<org.cyclonedx.model.Dependency> dependencies = new HashSet<>();
 
     public static void main( String[] args ) throws Exception {
-        String url1 = "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/";
-        String url2 = "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-core-2.14.1.jar!/";
+        String url1 = "jar:file:/Users/joebeeton/workspace/hello-world-spring-boot/target/myproject-0.0.1-SNAPSHOT.jar";
 
         Libraries.addAllLibraries( url1 );
-        Libraries.addAllLibraries( url2 );
         dump();
         CycloneDXModel sbom = new CycloneDXModel();
 		sbom.setComponents( Libraries.getLibraries() );		
-
-		sbom.save( "sbom.json" );
+        sbom.setDependencies( Libraries.getDependencies() );
+		sbom.save( "/tmp/sbom.json" );
     }
 
     // find containing jar file and include ALL libraries
@@ -169,6 +169,8 @@ public class Libraries {
         }
     }
 
+
+
     public static boolean isArchive( String filename ) {
         if ( filename.endsWith( "!/" ) ) {
             filename = filename.substring( 0, filename.length()-2 );
@@ -179,6 +181,10 @@ public class Libraries {
             || filename.endsWith( "ear" )
             || filename.endsWith( "zip" );
         return isArchive;
+    }
+
+    private static String getUniqueRef(String group, String artifact, String version) {
+        return group+":"+artifact+":"+version;
     }
 
     private static void parsePom(JarInputStream is, Library lib) throws Exception {
@@ -194,10 +200,21 @@ public class Libraries {
         if ( g != null ) lib.setGroup( g );
         if ( a != null ) lib.setName( a );
         if ( v != null ) lib.setVersion( v );
+        lib.setBomRef(getUniqueRef(lib.getGroup(),lib.getName(),lib.getVersion()));
+        org.cyclonedx.model.Dependency cycloneDep = new org.cyclonedx.model.Dependency(getUniqueRef(lib.getGroup(),lib.getName(),lib.getVersion()));
+        for(Dependency dep : model.getDependencies()) {
+            org.cyclonedx.model.Dependency subDep = new org.cyclonedx.model.Dependency(getUniqueRef(dep.getGroupId(),dep.getArtifactId(),dep.getVersion()));
+            cycloneDep.addDependency(subDep);
+        }
+        dependencies.add(cycloneDep);
     }
 
     public static List<Component> getLibraries() {
         return new ArrayList<Component>(libraries);
+    }
+
+    public static List<org.cyclonedx.model.Dependency> getDependencies() {
+        return new ArrayList<org.cyclonedx.model.Dependency>(dependencies);
     }
 
     public static void dump() {

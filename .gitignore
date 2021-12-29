@@ -3,3 +3,4 @@
 .vscode/
 dependency-reduced-pom.xml
 sbom.json
+.idea/

@@ -89,9 +89,10 @@ public class Jbom {
 				}
 				Logger.log("Writing SBOM with " + Libraries.getLibraries().size() + " libraries");
 				CycloneDXModel sbom = new CycloneDXModel();
-				sbom.setComponents( Libraries.getLibraries() );	
+				sbom.setComponents( Libraries.getLibraries() );
+				sbom.setDependencies( Libraries.getDependencies() );
 				sbom.save( filename );
-
+				
 				agentRunning = false;
 
 			}        
