@@ -9,12 +9,12 @@ jbom generates a Software Bill of Materials (SBOM) for apps on a running JVM
 </b></p>
 
 Advantages:
+* produces standard CycloneDX SBOM in JSON format
 * fast and accurate
 * finds all libraries, including platform, appserver, plug-in, and dynamic sources.
 * doesn't report test or other libraries not present at runtime
 * handles nested jar, war, ear, and zip files
 * no source code required
-* produces standard CycloneDX SBOM in JSON format
 
 ![jbom-screenshot](https://github.com/Contrast-Security-OSS/jbom/blob/main/resources/jbom-screenshot.png?raw=true)
 
@@ -25,18 +25,18 @@ Instrumentation has been around for decades, is widely used in performance tools
 
 Instrumentation allows us to do security analysis from within the running application - by watching the code run.  Directly measuring security from within the running code has speed, coverage, and accuracy benefits.  Using instrumentation to analyze for vulnerabilities is often called IAST (Interactive Application Security Testing). Using instrumentation to identify attacks and prevent exploit is often called RASP (Runtime Application Self-Protection).
 
-Remember, you may be getting false results from other approaches. Scanning file systems, code repos, or containers could easily fail to detect log4j accurately. Determining exploitability by attempting to test, scan, or fuzz for log4shell is even more inaccurate, requiring exactly right input with the exactly right syntax.
+Remember, you may be getting false results from other approaches. Scanning file systems, code repos, or containers could easily fail to detect libraries accurately.
 
-* log4j could be buried in a fat jar, war, or ear
-* log4j could be shaded in another jar
-* log4j could be included in the appserver, not the code repo
-* log4j could be part of dynamically loaded code or plugin
-* log4j could be many different versions with different classloaders in a single app
-* log4j could be masked by use of slf4j or other layers
-* log4j could be renamed, recompiled, or otherwise changed
+* library could be buried in a fat jar, war, or ear
+* library could be shaded in another jar
+* library could be included in the appserver, not the code repo
+* library could be part of dynamically loaded code or plugin
+* library could be many different versions with different classloaders in a single app
+* library could be masked by use of slf4j or other layers
+* library could be renamed, recompiled, or otherwise changed
 
 
-## Attaching to a running JVM with safelog4j...
+## Attaching to a running JVM with jbom...
 
   ```shell
   ssh hostname
