@@ -58,8 +58,6 @@ public class Libraries {
             return;
         }
 
-        System.out.println( "SCANNING: " + codesource );
-
         try {
             // save this lib
             String decoded = URLDecoder.decode( codesource, "UTF-8" );

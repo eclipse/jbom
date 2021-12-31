@@ -1,6 +1,9 @@
 package com.contrastsecurity;
 
 import java.io.File;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.List;
 
 import com.sun.tools.attach.VirtualMachine;
@@ -50,6 +53,7 @@ public class App {
         System.out.println();
         System.out.println("List of eligible JVM PIDs (must be running as same user):");
         try{
+            ensureToolsJar();
             listProcesses();
         }catch(NoClassDefFoundError err){
             System.err.println("Error. Try using 'jps' or 'jcmd' to list Java processes.");
@@ -67,6 +71,30 @@ public class App {
             .forEach(vm -> {
             System.out.println(vm.id() + " \t" + vm.displayName());
         });
+    }
+
+    public static void ensureToolsJar() {
+		if (App.class.getResource("/sun.jvmstat.monitor.MonitoredVm".replace('.', '/') + ".class") == null) {
+            try {
+                String javaHome = System.getProperty("java.home");
+                String toolsJarURL = "file:" + javaHome + "/../lib/tools.jar";
+
+                // Make addURL public
+                Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
+                method.setAccessible(true);
+
+                URLClassLoader sysloader = (URLClassLoader)ClassLoader.getSystemClassLoader();
+                if (sysloader.getResourceAsStream("/com/sun/tools/attach/VirtualMachine.class") == null) {
+                    method.invoke(sysloader, (Object) new URL(toolsJarURL));
+                    Thread.currentThread().getContextClassLoader().loadClass("com.sun.tools.attach.VirtualMachine");
+                    Thread.currentThread().getContextClassLoader().loadClass("com.sun.tools.attach.AttachNotSupportedException");
+                }
+
+            } catch (Exception e) {
+                System.out.println("Java home points to " + System.getProperty("java.home") + " make sure it is not a JRE path");
+                e.printStackTrace();
+            }
+		}
     }
 
 }
