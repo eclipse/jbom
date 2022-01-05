@@ -37,11 +37,10 @@ public class Libraries {
 
     public static void runScan(File jarPath, String outputPath) throws Exception {
         Libraries.addAllLibraries( jarPath.getAbsolutePath() );
-        // dump();
         CycloneDXModel sbom = new CycloneDXModel();
-		    sbom.setComponents( Libraries.getLibraries() );
+		sbom.setComponents( Libraries.getLibraries() );
         sbom.setDependencies( Libraries.getDependencies() );
-		    sbom.save( outputPath );
+		sbom.save( outputPath );
     }
 
     // find containing jar file and include ALL libraries

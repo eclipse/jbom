@@ -93,19 +93,19 @@ public class App implements Runnable {
         Logger.log( "" );
 
         if (pid != -1) {
-                try{
-                    String filename = App.class.getProtectionDomain()
-                            .getCodeSource()
-                            .getLocation()
-                            .toURI()
-                            .getPath();
-                    File agentFile = new File(filename);
-                    ByteBuddyAgent.attach(agentFile.getAbsoluteFile(), Integer.toString(pid), outputPath);
-                    System.out.println("Attached to target jvm and loaded agent successfully");
-                    System.out.println();
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
+            try{
+                String filename = App.class.getProtectionDomain()
+                        .getCodeSource()
+                        .getLocation()
+                        .toURI()
+                        .getPath();
+                File agentFile = new File(filename);
+                ByteBuddyAgent.attach(agentFile.getAbsoluteFile(), Integer.toString(pid), outputPath);
+                System.out.println("Attached to target jvm and loaded agent successfully");
+                System.out.println();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         } else if ( file != null ) {
             try{
                 Libraries.runScan(file,outputPath);
