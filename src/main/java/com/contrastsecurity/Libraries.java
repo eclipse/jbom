@@ -33,17 +33,13 @@ public class Libraries {
     private static Set<String> codesourceExamined = new HashSet<String>();
     private static Set<Component> libraries = new HashSet<Component>();
 
-    public static void main( String[] args ) throws Exception {
-        String url1 = "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-api-2.14.1.jar!/";
-        String url2 = "jar:file:/Users/jeffwilliams/Downloads/log4j%20demo/myproject-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/log4j-core-2.14.1.jar!/";
+    public static void runScan(File jarPath, String outputPath) throws Exception {
 
-        Libraries.addAllLibraries( url1 );
-        Libraries.addAllLibraries( url2 );
+        Libraries.addAllLibraries( jarPath.getAbsolutePath() );
         dump();
         CycloneDXModel sbom = new CycloneDXModel();
-		sbom.setComponents( Libraries.getLibraries() );		
-
-		sbom.save( "sbom.json" );
+		sbom.setComponents( Libraries.getLibraries() );
+		sbom.save( outputPath );
     }
 
     // find containing jar file and include ALL libraries
