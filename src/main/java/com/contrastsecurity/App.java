@@ -59,8 +59,9 @@ public class App {
             System.err.println("Error. Try using 'jps' or 'jcmd' to list Java processes.");
         }
         System.out.println();
-        System.out.println("To attach jbom to all JVMs running on a host:");
-        System.out.println("$ java -jar jbom-1.0.0.jar");
+        System.out.println("To attach jbom a JVM use:");
+        System.out.println("$ java -jar jbom-1.0.0.jar [pid]");
+        // FIXME: add ALL option
         System.out.println();
     }
 
@@ -79,7 +80,7 @@ public class App {
                 String javaHome = System.getProperty("java.home");
                 String toolsJarURL = "file:" + javaHome + "/../lib/tools.jar";
 
-                // Make addURL public
+                // Make addURL accessible
                 Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
                 method.setAccessible(true);
 
