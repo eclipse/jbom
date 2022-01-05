@@ -35,15 +35,13 @@ public class Libraries {
     private static Set<Component> libraries = new HashSet<>();
     private static Set<org.cyclonedx.model.Dependency> dependencies = new HashSet<>();
 
-    public static void main( String[] args ) throws Exception {
-        String url1 = "jar:file:/Users/joebeeton/workspace/hello-world-spring-boot/target/myproject-0.0.1-SNAPSHOT.jar";
-
-        Libraries.addAllLibraries( url1 );
-        dump();
+    public static void runScan(File jarPath, String outputPath) throws Exception {
+        Libraries.addAllLibraries( jarPath.getAbsolutePath() );
+        // dump();
         CycloneDXModel sbom = new CycloneDXModel();
-		sbom.setComponents( Libraries.getLibraries() );		
+		    sbom.setComponents( Libraries.getLibraries() );
         sbom.setDependencies( Libraries.getDependencies() );
-		sbom.save( "/tmp/sbom.json" );
+		    sbom.save( outputPath );
     }
 
     // find containing jar file and include ALL libraries
@@ -57,8 +55,6 @@ public class Libraries {
         if ( !isArchive( codesource ) ) {
             return;
         }
-
-        System.out.println( "SCANNING: " + codesource );
 
         try {
             // save this lib

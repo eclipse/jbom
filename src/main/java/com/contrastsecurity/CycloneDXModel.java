@@ -38,7 +38,9 @@ public class CycloneDXModel extends Bom {
 		String description = "Java";
 		String hostname = "unknown";
 		try {
-			hostname = InetAddress.getLocalHost().getHostName();
+			hostname =
+			InetAddress.getLocalHost().getHostAddress() + " (" + 
+			InetAddress.getLocalHost().getHostName() + ")";
 		} catch( Exception e ) {
 			// continuue
 		}
