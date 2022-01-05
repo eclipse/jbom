@@ -10,43 +10,22 @@ import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 
 import net.bytebuddy.agent.ByteBuddyAgent;
+import picocli.CommandLine;
 
-public class App {
+public class App implements Runnable {
+
+    @CommandLine.Option(names = { "-p", "--pid" }, description = "JVM PID to attach to")
+    private int pid = -1;
+
+    @CommandLine.Option(names = { "-f", "--file" }, description = "File to be scanned")
+    private File file;
+
+    @CommandLine.Option(names = { "-o", "--output" }, defaultValue = "sbom.json", description = "Output path")
+    private String outputPath;
+
+
     public static void main(String[] args){
-        Logger.log( "" );
-		Logger.log( "                           _ __" );
-		Logger.log( "                          (_) /_  ____  ____ ___" );
-		Logger.log( "                         / / __ \\/ __ \\/ __ `__ \\" );
-		Logger.log( "                        / / /_/ / /_/ / / / / / /" );
-		Logger.log( "                     __/ /_.___/\\____/_/ /_/ /_/" );
-		Logger.log( "                    /___/" );
-		Logger.log( "          by Contrast Security - https://contrastsecurity.com" );
-		Logger.log( "" );
-		Logger.log( " jbom generates a Software Bill of Materials (SBOM) for apps on a running JVM" );
-		Logger.log( "              https://github.com/Contrast-Security-OSS/jbom" );
-		Logger.log( "" );
-
-
-        if ( args.length > 0 && args.length < 3 ) {
-            try{
-                String pid = args[0];
-                String options = args.length>=2 ? args[1] : null;
-
-                String filename = App.class.getProtectionDomain()
-                    .getCodeSource()
-                    .getLocation()
-                    .toURI()
-                    .getPath();
-                File agentFile = new File(filename);
-                ByteBuddyAgent.attach(agentFile.getAbsoluteFile(), pid, options);
-                System.out.println("Attached to target jvm and loaded agent successfully");
-                System.out.println();
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        } else {
-            showHelp();
-        }
+        new CommandLine(new App()).execute(args);
     }
 
     private static void showHelp(){
@@ -98,4 +77,44 @@ public class App {
 		}
     }
 
+    @Override
+    public void run() {
+        Logger.log( "" );
+        Logger.log( "                           _ __" );
+        Logger.log( "                          (_) /_  ____  ____ ___" );
+        Logger.log( "                         / / __ \\/ __ \\/ __ `__ \\" );
+        Logger.log( "                        / / /_/ / /_/ / / / / / /" );
+        Logger.log( "                     __/ /_.___/\\____/_/ /_/ /_/" );
+        Logger.log( "                    /___/" );
+        Logger.log( "          by Contrast Security - https://contrastsecurity.com" );
+        Logger.log( "" );
+        Logger.log( " jbom generates a Software Bill of Materials (SBOM) for apps on a running JVM" );
+        Logger.log( "              https://github.com/Contrast-Security-OSS/jbom" );
+        Logger.log( "" );
+
+        if (pid != -1) {
+                try{
+                    String filename = App.class.getProtectionDomain()
+                            .getCodeSource()
+                            .getLocation()
+                            .toURI()
+                            .getPath();
+                    File agentFile = new File(filename);
+                    ByteBuddyAgent.attach(agentFile.getAbsoluteFile(), Integer.toString(pid), outputPath);
+                    System.out.println("Attached to target jvm and loaded agent successfully");
+                    System.out.println();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+        } else if ( file != null ) {
+            try{
+                Libraries.runScan(file,outputPath);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        } else {
+            showHelp();
+        }
+
+    }
 }
