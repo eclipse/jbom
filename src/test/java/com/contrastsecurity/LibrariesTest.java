@@ -14,9 +14,12 @@ public class LibrariesTest {
         String jar = "spring-petclinic-1.5.1.jar";
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource(jar).getFile());
-        Libraries.runScan( file, "target/test/petclinic-1.5.1.sbom" );
-        System.out.println( "Libraries found in "+file+": " + Libraries.getLibraries().size() );
-        assertTrue( "Correct nmber of libraries found", Libraries.getLibraries().size() == 135 );
+
+        Jbom jbom = new Jbom();
+        Libraries libs = jbom.doFile( file, "target/test" );
+
+        System.out.println( "Libraries found in "+file+": " + libs.getLibraries().size() );
+        assertTrue( "Correct nmber of libraries found", libs.getLibraries().size() == 135 );
     }
 
 }

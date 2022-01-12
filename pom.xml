@@ -21,12 +21,12 @@
 		<dependency>
 			<groupId>net.bytebuddy</groupId>
 			<artifactId>byte-buddy</artifactId>
-			<version>1.12.5</version>
+			<version>1.12.6</version>
 		</dependency>
 		<dependency>
 			<groupId>net.bytebuddy</groupId>
 			<artifactId>byte-buddy-agent</artifactId>
-			<version>1.12.5</version>
+			<version>1.12.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -106,9 +106,9 @@
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<manifestEntries>
-										<Main-Class>com.contrastsecurity.App</Main-Class>
-										<Premain-Class>com.contrastsecurity.Jbom</Premain-Class>
-										<Agent-Class>com.contrastsecurity.Jbom</Agent-Class>
+										<Main-Class>com.contrastsecurity.Jbom</Main-Class>
+										<Premain-Class>com.contrastsecurity.Agent</Premain-Class>
+										<Agent-Class>com.contrastsecurity.Agent</Agent-Class>
 										<Can-Redefine-Classes>true</Can-Redefine-Classes>
 										<Can-Retransform-Classes>true</Can-Retransform-Classes>
 										<Can-Set-Native-Method-Prefix>false</Can-Set-Native-Method-Prefix>
