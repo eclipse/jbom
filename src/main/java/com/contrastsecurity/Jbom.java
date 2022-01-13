@@ -72,27 +72,37 @@ public class Jbom implements Runnable {
         Jbom jbom = new Jbom();
         jbom.printBanner();
 
+        // remote
         if ( host != null ) {
-            jbom.doRemote( pid, exclude, outputDir, host, user, pass, remoteDir );
+            if ( dir != null ) {
+                jbom.doRemoteDirectory( dir, outputDir, host, user, pass, remoteDir );
+            }
+
+            else {
+                jbom.doRemoteProcess( pid, exclude, outputDir, host, user, pass, remoteDir );
+            }
         }
 
-        else if ( file != null ) {
-            jbom.doFile( file, outputDir );
-        }
-
-        else if ( dir != null ) {
-            jbom.doDirectory( dir, outputDir );
-        }
-        
+        // local
         else {
-            jbom.doLocal( pid, exclude, outputDir, tag );
+            if ( file != null ) {
+                jbom.doLocalFile( file, outputDir );
+            }
+
+            else if ( dir != null ) {
+                jbom.doLocalDirectory( dir, outputDir );
+            }
+        
+            else {
+                jbom.doLocalProcess( pid, exclude, outputDir, tag );
+            }
         }
 
         Logger.log( "" );
         Logger.log( "jbom complete" );
     }
 
-    public void doLocal(String pid, String exclude, String outputDir, String tag) {
+    public void doLocalProcess(String pid, String exclude, String outputDir, String tag) {
         ensureToolsJar();
         if ( pid.equals( "all" ) ) {
             try {
@@ -126,7 +136,7 @@ public class Jbom implements Runnable {
         }
     }
 
-    public Libraries doFile(String file, String outputDir) {
+    public Libraries doLocalFile(String file, String outputDir) {
         Logger.log( "Analyzing file " + file );
         Libraries libs = new Libraries();
 
@@ -152,8 +162,8 @@ public class Jbom implements Runnable {
         return libs;
     }
 
-    public Libraries doDirectory(String dir, String outputDir) {
-        Logger.log( "Analyzing directory " + dir );
+    public Libraries doLocalDirectory(String dir, String outputDir) {
+        Logger.log( "Analyzing local directory " + dir );
         Libraries libs = new Libraries();
         Path path = Paths.get( dir );
         String dirname = path.getFileName().toString();
@@ -175,6 +185,52 @@ public class Jbom implements Runnable {
         return libs;
     }
 
+    public void doRemoteDirectory(String dir, String outputDir, String host, String user, String pass, String remoteDir ) {
+        Logger.log( "Analyzing remote directory " + dir );
+        java.io.Console console = System.console();
+        if ( user == null ) {
+            console.readLine("Username: ");
+        }
+        if ( pass == null ) {
+            pass = new String(console.readPassword("Password: "));
+        }
+
+        try {
+            Remote remote = new Remote( host, user, pass );
+
+            // 1. upload the jbom.jar file
+            String filename = Remote.class.getProtectionDomain()
+                .getCodeSource()
+                .getLocation()
+                .toURI()
+                .getPath();
+            File agentFile = new File(filename);
+            remote.upload( remoteDir, agentFile );
+            
+            // 2. run java -jar jbom.jar on remote server
+            Logger.log( "Connecting to " + host );
+            remote.exec( "java -jar " + agentFile.getAbsolutePath() + " -d " + dir + " -o " + remoteDir + " -p " + tag );
+
+            // 3. download results and cleanup
+            File odir = new File( outputDir );
+            if ( !odir.exists() || !odir.isDirectory() ) {
+                odir.mkdirs();
+            }
+            List<String> files = remote.download( host, remoteDir, outputDir );
+            for ( String file : files ) {
+                Logger.log( "  - " + file );
+            }
+            Logger.log( "Remote Java directory analysis complete" );
+            Logger.log( "Saving SBOMs for " + host + " to directory: " + outputDir );
+
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 
     // list all files from this path
     public static List<Path> listFiles(Path path) throws IOException {
@@ -187,7 +243,7 @@ public class Jbom implements Runnable {
     }
 
 
-    public void doRemote(String pid, String exclude, String outputDir, String host, String user, String pass, String remoteDir) {
+    public void doRemoteProcess(String pid, String exclude, String outputDir, String host, String user, String pass, String remoteDir) {
         Logger.log( "Analyzing remote JVMs on " + host );
         java.io.Console console = System.console();
         if ( user == null ) {
