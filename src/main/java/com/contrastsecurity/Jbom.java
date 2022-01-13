@@ -85,7 +85,7 @@ public class Jbom implements Runnable {
             }
             int count = 1;
             for( String procid : processes.keySet() ) {
-                Logger.log( count++ + ": Analyzing Java process: " + procid );
+                Logger.log( count++ + ": Analyzing Java process: " + procid + " (" + processes.get( procid ) + ")" );
                 String name = outputDir + "/jbom-" + procid + ".json";
                 generateBOM( procid, name );
             }
