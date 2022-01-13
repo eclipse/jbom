@@ -71,7 +71,7 @@ public class Remote {
 
                 channel.get( remoteFile, localFile );
                 channel.rm( remoteFile );
-                files.add( remoteFile );
+                files.add( localFile );
             }
         } catch( Exception e ) {
             Logger.log( "Error during download" );

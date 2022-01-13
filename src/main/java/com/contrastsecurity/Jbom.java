@@ -63,34 +63,51 @@ public class Jbom implements Runnable {
         Jbom jbom = new Jbom();
         jbom.printBanner();
 
-        if ( host == null ) {
-            if ( jbom.file == null ) {
-                jbom.doLocal( pid, exclude, outputDir, tag );
-            } else {
-                jbom.doFile( file, outputDir );
-            }
-        } else {
+        if ( host != null ) {
             jbom.doRemote( pid, exclude, outputDir, host, user, pass, remoteDir );
         }
+
+        else if ( file != null ) {
+            jbom.doFile( file, outputDir );
+        }
+        
+        else {
+            jbom.doLocal( pid, exclude, outputDir, tag );
+        }
+
+        Logger.log( "" );
+        Logger.log( "jbom complete" );
     }
 
     public void doLocal(String pid, String exclude, String outputDir, String tag) {
         ensureToolsJar();
         if ( pid.equals( "all" ) ) {
-            Map<String, String> processes = getProcesses( exclude );
-            Logger.log( "Analyzing "+processes.size()+" local JVMs" );
-        
-            if ( processes.isEmpty() ) {
-                Logger.log( "No Java processes detected" );
-            }
-            int count = 1;
-            for( String procid : processes.keySet() ) {
-                Logger.log( count++ + ": Analyzing Java process: " + procid + " (" + processes.get( procid ) + ")" );
-                String name = outputDir + "/jbom-" + procid + ".json";
-                generateBOM( procid, name );
+            try {
+                Map<String, String> processes = getProcesses( exclude );
+                if ( processes.isEmpty() ) {
+                    Logger.log( "No local Java process detected" );
+                } else {
+                    Logger.log( "Detected "+processes.size()+" local Java processes:" );
+                    int count = 1;
+                    for ( String procid : processes.keySet() ) {
+                        Logger.log( "  " + procid + " (" + processes.get( procid ) + ")" );
+                    }
+                
+                    Logger.log( "" );
+                    Logger.log( "Starting analysis..." );
+                    count = 1;
+                    for( String procid : processes.keySet() ) {
+                        Logger.log( "" );
+                        Logger.log( "  " + count++ + ": " + procid + " (" + processes.get( procid ) + ")" );
+                        String name = outputDir + "/jbom-" + procid + ".json";
+                        generateBOM( procid, name );
+                    }
+                }
+            } catch( Exception e ) {
+                e.printStackTrace();
             }
         } else {
-            Logger.log( "Analyzing local JVM with pid " + pid );
+            Logger.log( "Analyzing local Java process with pid " + pid );
             String name = outputDir + "/jbom-" + ( tag == null ? "" : "-" +tag ) + "-" + pid + ".json";
             generateBOM( pid, name);
         }
@@ -111,7 +128,7 @@ public class Jbom implements Runnable {
     }
 
     public void doRemote(String pid, String exclude, String outputDir, String host, String user, String pass, String remoteDir) {
-        Logger.log( "Analyzing JVMs on " + host );
+        Logger.log( "Analyzing remote JVMs on " + host );
         java.io.Console console = System.console();
         if ( user == null ) {
             console.readLine("Username: ");
@@ -136,7 +153,6 @@ public class Jbom implements Runnable {
             Logger.log( "Connecting to " + host );
             String myPid = ByteBuddyAgent.ProcessProvider.ForCurrentVm.INSTANCE.resolve();
             remote.exec( "java -jar " + agentFile.getAbsolutePath() + " -x " + myPid + " -o " + remoteDir + " -p " + tag );
-            Logger.log( "Remote library analysis complete" );
 
             // 3. download results and cleanup
             File odir = new File( outputDir );
@@ -144,11 +160,12 @@ public class Jbom implements Runnable {
                 odir.mkdirs();
             }
             List<String> files = remote.download( host, remoteDir, outputDir );
-            Logger.log( "Detected " + files.size() + " Java process" + ( files.size() > 1 ? "es" : "" ) );
+            Logger.log( "Detected " + files.size() + " remote Java process" + ( files.size() > 1 ? "es" : "" ) );
             for ( String file : files ) {
                 Logger.log( "  - " + file );
             }
-            Logger.log( "SBOMs for " + host + " downloaded to directory: " + outputDir );
+            Logger.log( "Remote Java process analysis complete" );
+            Logger.log( "Saving SBOMs for " + host + " to directory: " + outputDir );
 
         } catch ( Exception e ) {
             e.printStackTrace();
@@ -163,15 +180,7 @@ public class Jbom implements Runnable {
         }
     }
 
-    public Map<String, String> getProcesses( String exclude ){
-
-        //    MonitoredHost monitoredHost = MonitoredHost.getMonitoredHost("localhost");
-        //    Set<Integer> jvms = monitoredHost.activeVms();
-
-        //    for ( int pid : jvms ) {
-        //        System.out.println( "  JVM: " + pid );
-        //    }
-
+    public Map<String, String> getProcesses( String exclude ) throws Exception {
         Map<String,String> map = new HashMap<String, String>();
         List<VirtualMachineDescriptor> vms = VirtualMachine.list();
         vms.stream()
@@ -215,13 +224,13 @@ public class Jbom implements Runnable {
 
         String myPid = ByteBuddyAgent.ProcessProvider.ForCurrentVm.INSTANCE.resolve();
         if ( pid.equals( myPid ) ) {
-            Logger.log( "   Skipping jbom process (pid: "+myPid+")" );
+            Logger.log( "     Skipping jbom process (pid: "+myPid+")" );
             return;
         }
 
         if (pid != null && !pid.isEmpty() ) {
             try{
-                Logger.log( "   Starting analysis" );
+                Logger.log( "     Analyzing..." );
                 String filename = Jbom.class.getProtectionDomain()
                         .getCodeSource()
                         .getLocation()
@@ -230,12 +239,12 @@ public class Jbom implements Runnable {
                 File agentFile = new File(filename);
                 ByteBuddyAgent.attach(agentFile.getAbsoluteFile(), pid, path);
             } catch(Exception e) {
-                Logger.log( "   Error attaching to " + pid );
-                Logger.log ( "    --> " + e.getMessage() );
+                Logger.log( "     Error attaching to " + pid );
+                Logger.log ( "      --> " + e.getMessage() );
                 e.printStackTrace();
             }
         }
-        Logger.log( "   Saving SBOM to " + path );
+        Logger.log( "     Saving SBOM to " + path );
     }
 
     private void printBanner() {
@@ -246,6 +255,7 @@ public class Jbom implements Runnable {
         Logger.log( "                   / / /_/ / /_/ / / / / / /" );
         Logger.log( "                __/ /_.___/\\____/_/ /_/ /_/" );
         Logger.log( "               /___/" );
+        Logger.log( "" );
         Logger.log( "     by Contrast Security - https://contrastsecurity.com" );
         Logger.log( "" );
         Logger.log( "      jbom generates SBOMs for all JVMs running on a host" );
