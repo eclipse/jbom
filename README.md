@@ -37,12 +37,47 @@ Remember, you may be getting false results from other approaches. Scanning file 
 
 
 ## Attaching to a running JVM with jbom...
-
+ First list eligible JVM processes running on the server.
   ```shell
   ssh hostname
   curl -O https://github.com/Contrast-Security-OSS/jbom/releases/download/v1.0.0/jbom-1.0.0.jar
-  java -javaagent:jbom-1.0.0.jar
-  cat sbom.json
+  java -jar jbom-1.0.0.jar 
+  ...
+  List of eligible JVM PIDs (must be running as same user):
+  1234 	com.some.App
+  4321 	com.another.App
+  ```
+Then run
+  ```shell
+  java -jar jbom-1.0.0.jar -p 1234 -o /tmp/sbom.json
+  ```
+
+Which will attach jbom to the process 1234, inject the sbom generation code into process 1234 and execute it.
+A few things to note :
+* As the code is executed on the target JVM, if you do not specify an output file, it will write it to a file named "sbom.json" under the target JVMs current working directory. Not the directory you are running the jbom.jar from.
+* The execution of the sbom generation happens asynchronously of the exit of the jbom.jar. So the jbom.jar may exit before the sbom.json is written to disk. You may have to wait 30 seconds or so after exit of the jbom.jar for the sbom.json file to be generated.d
+
+
+## Attaching jbom as a Java Agent...
+  ```shell
+  ssh hostname
+  curl -O https://github.com/Contrast-Security-OSS/jbom/releases/download/v1.0.0/jbom-1.0.0.jar
+  java -jar jbom-1.0.0.jar 
+  java -javaagent:jbom-1.0.0.jar=/tmp/sbom.json -jar yourapplication.jar
+  ```
+When running as a java agent, only one argument is possible which is to specify the location of the sbom.json as shown in the above example. If not set the sbom.json will be outputted to the current working directory.
+
+
+
+
+
+## Scanning a build artifact...
+It is possible to scan a build artifact ( ear/war/jar )
+  ```shell
+  ssh hostname
+  curl -O https://github.com/Contrast-Security-OSS/jbom/releases/download/v1.0.0/jbom-1.0.0.jar
+  java -jar jbom-1.0.0.jar -f nameOfYourBuildArtifact.jar -o /tmp/sbom.json
+  cat /tmp/sbom.json
   ```
 
 

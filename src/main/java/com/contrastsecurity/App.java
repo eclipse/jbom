@@ -39,7 +39,7 @@ public class App implements Runnable {
         }
         System.out.println();
         System.out.println("To attach jbom a JVM use:");
-        System.out.println("$ java -jar jbom-1.0.0.jar [pid]");
+        System.out.println("$ java -jar jbom-1.0.0.jar -p [pid]");
         // FIXME: add ALL option
         System.out.println();
     }
