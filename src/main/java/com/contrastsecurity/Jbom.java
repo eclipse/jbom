@@ -60,7 +60,6 @@ public class Jbom implements Runnable {
     @Override
     public void run() {
 
-        System.out.println( ">>>" + System.getProperty("user.dir") );
         Jbom jbom = new Jbom();
         jbom.printBanner();
 
@@ -216,13 +215,13 @@ public class Jbom implements Runnable {
 
         String myPid = ByteBuddyAgent.ProcessProvider.ForCurrentVm.INSTANCE.resolve();
         if ( pid.equals( myPid ) ) {
-            Logger.log( "  Skipping jbom process (pid: "+myPid+")" );
+            Logger.log( "   Skipping jbom process (pid: "+myPid+")" );
             return;
         }
 
         if (pid != null && !pid.isEmpty() ) {
             try{
-                Logger.log( "  Starting analysis" );
+                Logger.log( "   Starting analysis" );
                 String filename = Jbom.class.getProtectionDomain()
                         .getCodeSource()
                         .getLocation()
@@ -231,12 +230,12 @@ public class Jbom implements Runnable {
                 File agentFile = new File(filename);
                 ByteBuddyAgent.attach(agentFile.getAbsoluteFile(), pid, path);
             } catch(Exception e) {
-                Logger.log( "  Error attaching to " + pid );
-                Logger.log ( "   --> " + e.getMessage() );
+                Logger.log( "   Error attaching to " + pid );
+                Logger.log ( "    --> " + e.getMessage() );
                 e.printStackTrace();
             }
         }
-        Logger.log( "  Saving SBOM to " + path );
+        Logger.log( "   Saving SBOM to " + path );
     }
 
     private void printBanner() {
