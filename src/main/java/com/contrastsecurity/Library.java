@@ -24,6 +24,9 @@ public class Library extends Component implements Comparable<Library> {
     @JsonIgnore
     public String path = null;
 
+    @JsonIgnore
+    public int classesUsed = 0;
+
     public Library() {
     }
     

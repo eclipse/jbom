@@ -1,5 +1,6 @@
-/target
 .DS_Store
 .vscode/
+.idea/
+/target
+/sbom
 dependency-reduced-pom.xml
-sbom.json
