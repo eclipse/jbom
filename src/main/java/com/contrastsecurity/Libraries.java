@@ -36,12 +36,19 @@ public class Libraries {
     private Set<Component> libraries = new HashSet<>();
     private Set<org.cyclonedx.model.Dependency> dependencies = new HashSet<>();
 
-    public void runScan(File jarPath, String outputPath) throws Exception {
+    public void runScan(File jarPath) throws Exception {
         addAllLibraries( null, jarPath.getAbsolutePath() );
+    }
+
+    public void save( String outputPath ) {
         CycloneDXModel sbom = new CycloneDXModel();
-		sbom.setComponents( getLibraries() );
-        sbom.setDependencies( getDependencies() );
-		sbom.save( outputPath );
+        for ( Component component: libraries ) {
+            sbom.addComponent(component);
+        }
+        for ( org.cyclonedx.model.Dependency dep : getDependencies() ) {
+            sbom.addDependency( dep );
+        }
+        sbom.save( outputPath );
     }
 
     // find containing jar file and include ALL libraries
@@ -49,7 +56,6 @@ public class Libraries {
 
         // FIXME - change codesourceExamined to a Map<codesource, Library>
         // increment library.classesUsed;
-
 
         if ( codesourceExamined.contains( codesource ) ) {
             return;

@@ -39,8 +39,9 @@ public class Library extends Component implements Comparable<Library> {
         path = fullpath.substring( 0, fullpath.lastIndexOf("/") );
 
         this.addProperty( "path", path );
-        this.addProperty( "jar", jar );
-        String fqn = fullpath.substring( 0, fullpath.lastIndexOf( ".jar" ) );
+        this.addProperty( "archive", jar );
+        int sep = fullpath.lastIndexOf( "." );
+        String fqn = fullpath.substring( 0, sep );
         this.setName( fqn.substring( fqn.lastIndexOf( "/" ) + 1 ) );
         this.setVersion( fqn.substring( fqn.lastIndexOf( "-" ) + 1 ) );
         try {

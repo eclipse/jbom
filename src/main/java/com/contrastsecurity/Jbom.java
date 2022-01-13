@@ -2,14 +2,20 @@ package com.contrastsecurity;
 
 import java.io.Console;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
@@ -43,7 +49,10 @@ public class Jbom implements Runnable {
     private String exclude;
 
     @CommandLine.Option(names = { "-f", "--file" }, description = "File to be scanned" )
-    private File file;
+    private String file;
+
+    @CommandLine.Option(names = { "-d", "--dir" }, description = "Directory to be scanned" )
+    private String dir;
 
     @CommandLine.Option(names = { "-o", "--outputDir" }, description = "Output directory" )
     private String outputDir = System.getProperty("user.dir") + "/sbom";
@@ -69,6 +78,10 @@ public class Jbom implements Runnable {
 
         else if ( file != null ) {
             jbom.doFile( file, outputDir );
+        }
+
+        else if ( dir != null ) {
+            jbom.doDirectory( dir, outputDir );
         }
         
         else {
@@ -113,19 +126,66 @@ public class Jbom implements Runnable {
         }
     }
 
-    public Libraries doFile(File file, String outputDir) {
+    public Libraries doFile(String file, String outputDir) {
         Logger.log( "Analyzing file " + file );
         Libraries libs = new Libraries();
+
+        File f = new File( file );
+        if ( !f.exists() ) {
+            Logger.log( "Could not find file: " + file );
+        }
+        if ( !f.isFile() ) {
+            Logger.log( "Could not open file: " + file );
+        }
+        if ( !libs.isArchive( file ) ) {
+            Logger.log( "File does not appear to be an archive: " + file );
+        }
+
         try{
-            String name = file.getName();
-            name = name.substring( 0, name.lastIndexOf('.'));
-            name = outputDir + "/jbom-" + ( tag == null ? "" : "-" +tag ) + ".json";
-            libs.runScan( file, name );
+            String name = file.substring( 0, file.lastIndexOf('.'));
+            name = outputDir + "/jbom-" + name + ( tag == null ? "" : "-" +tag ) + ".json";
+            libs.runScan( f );
+            libs.save(name);
         }catch(Exception e){
             e.printStackTrace();
         }
         return libs;
     }
+
+    public Libraries doDirectory(String dir, String outputDir) {
+        Logger.log( "Analyzing directory " + dir );
+        Libraries libs = new Libraries();
+        Path path = Paths.get( dir );
+        String dirname = path.getFileName().toString();
+
+        try {
+            String name = outputDir + "/jbom-" + dirname + ( tag == null ? "" : "-" +tag ) + ".json";
+            List<Path> paths = listFiles(path);
+            for ( Path p : paths ) {
+                try {
+                    libs.runScan( p.toFile() );
+                } catch( Exception e ) {
+                    Logger.log( "  Problem processing local file " + p + ". Continuing...");
+                }
+            }
+            libs.save(name);
+        } catch( Exception e ) {
+            Logger.log( "  Couldn't get a list of files in " + dir );
+        }
+        return libs;
+    }
+
+
+    // list all files from this path
+    public static List<Path> listFiles(Path path) throws IOException {
+        List<Path> result;
+        try (Stream<Path> walk = Files.walk(path)) {
+            result = walk.filter(Files::isRegularFile)
+                    .collect(Collectors.toList());
+        }
+        return result;
+    }
+
 
     public void doRemote(String pid, String exclude, String outputDir, String host, String user, String pass, String remoteDir) {
         Logger.log( "Analyzing remote JVMs on " + host );
