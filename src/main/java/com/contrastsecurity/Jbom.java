@@ -45,8 +45,8 @@ public class Jbom implements Runnable {
     @CommandLine.Option(names = { "-f", "--file" }, description = "File to be scanned" )
     private File file;
 
-    @CommandLine.Option(names = { "-o", "--outputDir" }, defaultValue = "sbom", description = "Output directory" )
-    private String outputDir = "sbom";
+    @CommandLine.Option(names = { "-o", "--outputDir" }, description = "Output directory" )
+    private String outputDir = System.getProperty("user.dir") + "/sbom";
 
     @CommandLine.Option(names = { "-t", "--tag" }, description = "Tag to use in output filenames" )
     private String tag;
@@ -60,6 +60,7 @@ public class Jbom implements Runnable {
     @Override
     public void run() {
 
+        System.out.println( ">>>" + System.getProperty("user.dir") );
         Jbom jbom = new Jbom();
         jbom.printBanner();
 
@@ -77,20 +78,21 @@ public class Jbom implements Runnable {
     public void doLocal(String pid, String exclude, String outputDir, String tag) {
         ensureToolsJar();
         if ( pid.equals( "all" ) ) {
-            Logger.log( "Analyzing all local JVMs" );
             Map<String, String> processes = getProcesses( exclude );
+            Logger.log( "Analyzing "+processes.size()+" local JVMs" );
         
             if ( processes.isEmpty() ) {
                 Logger.log( "No Java processes detected" );
             }
+            int count = 1;
             for( String procid : processes.keySet() ) {
-                Logger.log( "Analyzing process " + procid );
+                Logger.log( count++ + ": Analyzing Java process: " + procid );
                 String name = outputDir + "/jbom-" + procid + ".json";
-                generateBOM( procid, name);
+                generateBOM( procid, name );
             }
         } else {
             Logger.log( "Analyzing local JVM with pid " + pid );
-            String name = outputDir + "/jbom-" + tag + "-" + pid + ".json";
+            String name = outputDir + "/jbom-" + ( tag == null ? "" : "-" +tag ) + "-" + pid + ".json";
             generateBOM( pid, name);
         }
     }
@@ -101,7 +103,7 @@ public class Jbom implements Runnable {
         try{
             String name = file.getName();
             name = name.substring( 0, name.lastIndexOf('.'));
-            name = outputDir+ "/jbom-" + name + ".json";
+            name = outputDir + "/jbom-" + ( tag == null ? "" : "-" +tag ) + ".json";
             libs.runScan( file, name );
         }catch(Exception e){
             e.printStackTrace();
@@ -211,17 +213,16 @@ public class Jbom implements Runnable {
 
 
     public void generateBOM( String pid, String path) {
-        Logger.log( "Generating SBOM for pid: " + pid );
 
         String myPid = ByteBuddyAgent.ProcessProvider.ForCurrentVm.INSTANCE.resolve();
         if ( pid.equals( myPid ) ) {
-            Logger.log( "Skipping jbom process (pid: "+myPid+")" );
+            Logger.log( "  Skipping jbom process (pid: "+myPid+")" );
             return;
         }
 
         if (pid != null && !pid.isEmpty() ) {
             try{
-                Logger.log( "Attempting to attach to pid: " + pid );
+                Logger.log( "  Starting analysis" );
                 String filename = Jbom.class.getProtectionDomain()
                         .getCodeSource()
                         .getLocation()
@@ -229,14 +230,13 @@ public class Jbom implements Runnable {
                         .getPath();
                 File agentFile = new File(filename);
                 ByteBuddyAgent.attach(agentFile.getAbsoluteFile(), pid, path);
-                System.out.println("Attached to target jvm and loaded agent successfully");
-                System.out.println();
             } catch(Exception e) {
-                Logger.log( "Error for pid: " + pid );
-                Logger.log ( " --> " + e.getMessage() );
+                Logger.log( "  Error attaching to " + pid );
+                Logger.log ( "   --> " + e.getMessage() );
                 e.printStackTrace();
             }
         }
+        Logger.log( "  Saving SBOM to " + path );
     }
 
     private void printBanner() {
