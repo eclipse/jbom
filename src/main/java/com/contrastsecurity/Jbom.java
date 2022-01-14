@@ -33,19 +33,19 @@ public class Jbom implements Runnable {
     @CommandLine.Option(names = { "-h", "--host" }, description = "Hostname or IP address to connect to")
     private String host = null;
 
-    @CommandLine.Option(names = { "-u", "--user" }, description = "Username of user to connect as")
+    @CommandLine.Option(names = { "-U", "--user" }, description = "Username of user to connect as")
     private String user;
 
-    @CommandLine.Option(names = { "-p", "--pass" }, description = "Password for user" )
+    @CommandLine.Option(names = { "-P", "--password" }, description = "Password for user" )
     private String pass;
 
     @CommandLine.Option(names = { "-r", "--remote" }, defaultValue = "/tmp/jbom", description = "Remote directory to use" )
     private String remoteDir = "/tmp/jbom";
 
-    @CommandLine.Option(names = { "-j", "--jvmpid" }, defaultValue = "all", description = "JVM PID to attach to or 'all'" )
+    @CommandLine.Option(names = { "-p", "--pid" }, defaultValue = "all", description = "Java process pid to attach to or 'all'" )
     private String pid = "all";
 
-    @CommandLine.Option(names = { "-x", "--exclude" }, description = "JVM PID to exclude" )
+    @CommandLine.Option(names = { "-x", "--exclude" }, description = "Java process pid to exclude" )
     private String exclude;
 
     @CommandLine.Option(names = { "-f", "--file" }, description = "File to be scanned" )
@@ -60,6 +60,9 @@ public class Jbom implements Runnable {
     @CommandLine.Option(names = { "-t", "--tag" }, description = "Tag to use in output filenames" )
     private String tag;
 
+    @CommandLine.Option(names = { "-D", "--debug" }, description = "Enable debug output" )
+    private boolean debug = false;
+
     
     public static void main(String[] args){
         int exitCode = new CommandLine(new Jbom()).execute(args);
@@ -71,6 +74,7 @@ public class Jbom implements Runnable {
 
         Jbom jbom = new Jbom();
         jbom.printBanner();
+        Logger.setDebug( debug );
 
         // remote
         if ( host != null ) {
@@ -131,7 +135,7 @@ public class Jbom implements Runnable {
             }
         } else {
             Logger.log( "Analyzing local Java process with pid " + pid );
-            String name = outputDir + "/jbom-" + ( tag == null ? "" : "-" +tag ) + "-" + pid + ".json";
+            String name = outputDir + "/jbom" + ( tag == null ? "" : "-" +tag ) + "-" + pid + ".json";
             generateBOM( pid, name);
         }
     }
@@ -152,7 +156,15 @@ public class Jbom implements Runnable {
         }
 
         try{
-            String name = file.substring( 0, file.lastIndexOf('.'));
+            String name = file;
+            int idx = name.lastIndexOf('/');
+            if ( idx != -1 ) {
+                name = name.substring( idx + 1 );
+            }
+            idx = name.lastIndexOf('.');
+            if ( idx != -1 ) {
+                name = name.substring( 0, idx );
+            }
             name = outputDir + "/jbom-" + name + ( tag == null ? "" : "-" +tag ) + ".json";
             libs.runScan( f );
             libs.save(name);
@@ -209,7 +221,7 @@ public class Jbom implements Runnable {
             
             // 2. run java -jar jbom.jar on remote server
             Logger.log( "Connecting to " + host );
-            remote.exec( "java -jar " + agentFile.getAbsolutePath() + " -d " + dir + " -o " + remoteDir + " -p " + tag );
+            remote.exec( "java -jar " + agentFile.getAbsolutePath() + " -d " + dir + " -o " + remoteDir + " -p " + tag + ( debug ? " -D" : "" ));
 
             // 3. download results and cleanup
             File odir = new File( outputDir );
@@ -268,7 +280,7 @@ public class Jbom implements Runnable {
             // 2. run java -jar jbom.jar on remote server
             Logger.log( "Connecting to " + host );
             String myPid = ByteBuddyAgent.ProcessProvider.ForCurrentVm.INSTANCE.resolve();
-            remote.exec( "java -jar " + agentFile.getAbsolutePath() + " -x " + myPid + " -o " + remoteDir + " -p " + tag );
+            remote.exec( "java -jar " + agentFile.getAbsolutePath() + " -x " + myPid + " -o " + remoteDir + " -p " + tag + ( debug ? " -D" : "" ));
 
             // 3. download results and cleanup
             File odir = new File( outputDir );

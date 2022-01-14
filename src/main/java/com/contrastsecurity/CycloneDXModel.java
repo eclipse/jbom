@@ -59,7 +59,7 @@ public class CycloneDXModel extends Bom {
 	
 	public void save( String filename ) {
 		try {
-			Logger.log( "Saving SBOM with " + getComponents().size() + " to " + filename );
+			Logger.log( "Saving SBOM with " + getComponents().size() + " components to " + filename );
 			BomJsonGenerator bomGenerator = BomGeneratorFactory.createJson(CycloneDxSchema.VERSION_LATEST, this);
 			String bomString = bomGenerator.toJsonString();			
 			FileUtils.write(new File(filename), bomString, Charset.forName("UTF-8"), false);		

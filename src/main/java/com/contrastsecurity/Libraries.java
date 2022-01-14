@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -57,11 +56,6 @@ public class Libraries {
         // FIXME - change codesourceExamined to a Map<codesource, Library>
         // increment library.classesUsed;
 
-        if ( codesourceExamined.contains( codesource ) ) {
-            return;
-        }
-        codesourceExamined.add( codesource );
-
         if ( !isArchive( codesource ) ) {
             return;
         }
@@ -71,16 +65,24 @@ public class Libraries {
             String filepath = decoded.substring( decoded.lastIndexOf(":") + 1);
             String parts[] = filepath.split( "!/" );
             String path = parts[0];
+
+            if ( codesourceExamined.contains( path ) ) {
+                return;
+            }
+            codesourceExamined.add( path );
+
             File f = new File( path );
             Library lib = new Library( parts[parts.length-1] );  // last segment
             lib.parsePath( path );
             lib.setType( Library.Type.LIBRARY );
+            lib.addProperty( "codesource", path );
+
+            Logger.debug( "MAIN: " + codesource );
 
             // add Contrast custom properties
             lib.addProperty("source", "Contrast Security - https://contrastsecurity.com");
             lib.addProperty("tool", "jbom - https://github.com/Contrast-Security-OSS/jbom");
             lib.setScope( Scope.REQUIRED );
-            lib.addProperty( "codesource", codesource );
 
             libraries.add( lib );
             invoked.add( lib );
@@ -98,10 +100,10 @@ public class Libraries {
             // scan for nested libraries
             JarInputStream jis3 = new JarInputStream( new FileInputStream( f ) );
             JarFile jarfile = new JarFile( f );
-            scan( jarfile, jis3, codesource );
+            scan( jarfile, jis3, f.getAbsolutePath() );
         } catch( Exception e ) {
-            Logger.log( "The safelog4j project needs your help to deal with unusual CodeSources." );
-            Logger.log( "Report issue here: https://github.com/Contrast-Security-OSS/safelog4j/issues/new/choose" );
+            Logger.log( "The jbom project needs your help to deal with unusual CodeSources." );
+            Logger.log( "Report issue here: https://github.com/Contrast-Security-OSS/jbom/issues/new/choose" );
             Logger.log( "Please include:" );
             Logger.log( "  CodeSource: " + codesource );
             e.printStackTrace();
@@ -128,7 +130,8 @@ public class Libraries {
         // FIXME: set Scope.EXCLUDED for non-invoked libraries
         innerlib.setScope( Scope.REQUIRED );
         innerlib.parsePath( entry.getName() );
-        innerlib.addProperty( "codesource", codesource );
+        innerlib.addProperty( "codesource", jarFile.getName() + "!/" + entry.getName() );
+        Logger.debug( "   INNER " + entry.getName() );
 
         libraries.add( innerlib );
         innerlib.setType( Library.Type.LIBRARY );

@@ -56,7 +56,7 @@ public class Agent {
 		}
 
 		reportResults( libs, filename );
-		Logger.log( "jbom complete. SBOM with " + libs.getLibraries().size() + " libraries written to " + filename );
+		Logger.log( "jbom complete" );
 		Logger.log( "==================================" );
 
 		agentRunning = false;
