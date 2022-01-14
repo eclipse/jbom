@@ -32,6 +32,8 @@ public class Agent {
 
 		Logger.log( "==================================" );
 		Logger.log( "jbom attached" );
+		Logger.log( "Java vendor : " + System.getProperty( "java.vendor" ) );
+		Logger.log( "Java version: " + System.getProperty( "java.version" ) );
 		Libraries libs = new Libraries();
 		Class[] classes = inst.getAllLoadedClasses();
 		for ( Class clazz : classes ) {

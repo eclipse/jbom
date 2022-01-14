@@ -26,21 +26,23 @@ public class Remote {
         this.pass = pass;
     }
 
-    public void upload( String dir, File f ) {
+    public void upload( String remoteDir, File f ) {
+        Logger.debug( "Remote upload: " + f.getAbsolutePath() + " to " + remoteDir );
+
         Session session = null;
         ChannelSftp channel = null;
         try {
             session = getSession();
             channel = getSftpChannel( session );
 
-            rmdir( dir );
-            channel.mkdir( dir );
-            channel.cd( dir );
+            rmdir( remoteDir );
+            channel.mkdir( remoteDir );
+            channel.cd( remoteDir );
             FileInputStream fis = new FileInputStream(f);
             channel.put(fis, f.getName() );
             fis.close();
         } catch( Exception e ) {
-            Logger.log( "Error uploading " + f.getName() + " to " + dir );
+            Logger.log( "Error uploading " + f.getName() + " to " + remoteDir );
             e.printStackTrace();
         } finally {
             channel.disconnect();
@@ -50,6 +52,8 @@ public class Remote {
 
 
     public List<String> download( String host, String remoteDir, String localDir ) {
+        Logger.debug( "Remote download: " + remoteDir + " to " + localDir );
+
         Session session = null;
         ChannelSftp channel = null;
         List<String> files = new ArrayList<String>();
@@ -89,6 +93,7 @@ public class Remote {
 
 
     public void exec(String command) {
+        Logger.debug( "Remote exec: " + command );
         Session session = null;
         ChannelExec channel = null;
         try {
@@ -126,14 +131,14 @@ public class Remote {
                 }
             }
             
-            // System.out.println( "\n\n\n\n=======================================");
-            // System.out.println("exit  : " + channel.getExitStatus());
-            // System.out.println("output: " + outputBuffer.toString("UTF-8"));
-            // System.out.println("error : " + errorBuffer.toString("UTF-8"));
-            // System.out.println( "=======================================\n\n\n\n");
+            Logger.debug( "=======================================");
+            Logger.debug("exit  : " + channel.getExitStatus());
+            Logger.debug("output: " + outputBuffer.toString("UTF-8"));
+            Logger.debug("error : " + errorBuffer.toString("UTF-8"));
+            Logger.debug( "=======================================");
         } catch( Exception e ) {
             Logger.log( "Error executing " + command );
-            e.printStackTrace();
+            Logger.log( "  " + e.getMessage() );
         } finally {
             channel.disconnect();
             session.disconnect();

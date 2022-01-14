@@ -75,6 +75,8 @@ public class Jbom implements Runnable {
         Jbom jbom = new Jbom();
         jbom.printBanner();
         Logger.setDebug( debug );
+		Logger.debug( "Java vendor : " + System.getProperty( "java.vendor" ) );
+		Logger.debug( "Java version: " + System.getProperty( "java.version" ) );
 
         // remote
         if ( host != null ) {
@@ -221,7 +223,7 @@ public class Jbom implements Runnable {
             
             // 2. run java -jar jbom.jar on remote server
             Logger.log( "Connecting to " + host );
-            remote.exec( "java -jar " + agentFile.getAbsolutePath() + " -d " + dir + " -o " + remoteDir + " -p " + tag + ( debug ? " -D" : "" ));
+            remote.exec( "java -jar " + agentFile.getAbsolutePath() + " -d " + dir + " -o " + remoteDir + ( debug ? " -D" : "" ) + " -t " + host );
 
             // 3. download results and cleanup
             File odir = new File( outputDir );
@@ -241,18 +243,6 @@ public class Jbom implements Runnable {
     }
 
 
-
-
-
-    // list all files from this path
-    public static List<Path> listFiles(Path path) throws IOException {
-        List<Path> result;
-        try (Stream<Path> walk = Files.walk(path)) {
-            result = walk.filter(Files::isRegularFile)
-                    .collect(Collectors.toList());
-        }
-        return result;
-    }
 
 
     public void doRemoteProcess(String pid, String exclude, String outputDir, String host, String user, String pass, String remoteDir) {
@@ -280,7 +270,7 @@ public class Jbom implements Runnable {
             // 2. run java -jar jbom.jar on remote server
             Logger.log( "Connecting to " + host );
             String myPid = ByteBuddyAgent.ProcessProvider.ForCurrentVm.INSTANCE.resolve();
-            remote.exec( "java -jar " + agentFile.getAbsolutePath() + " -x " + myPid + " -o " + remoteDir + " -p " + tag + ( debug ? " -D" : "" ));
+            remote.exec( "java -jar " + agentFile.getAbsolutePath() + " -x " + myPid + " -o " + remoteDir + ( debug ? " -D" : "" ) + " -t " + host );
 
             // 3. download results and cleanup
             File odir = new File( outputDir );
@@ -374,6 +364,21 @@ public class Jbom implements Runnable {
         }
         Logger.log( "     Saving SBOM to " + path );
     }
+
+
+
+
+    // list all files from this path
+    public static List<Path> listFiles(Path path) throws IOException {
+        List<Path> result;
+        try (Stream<Path> walk = Files.walk(path)) {
+            result = walk.filter(Files::isRegularFile)
+                    .collect(Collectors.toList());
+        }
+        return result;
+    }
+
+
 
     private void printBanner() {
         Logger.log( "" );
