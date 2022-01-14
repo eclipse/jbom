@@ -8,11 +8,11 @@ jbom generates SBOMs for all JVMs running on a host
 <br>
 </b></p>
 
-Every project should create an SBOM and make it available, so that people know what ingredients are inside.  You've got a few options for generating SBOMs:
+Every project should create a Software Bill of Materials (SBOM) and make it available, so that people know what ingredients are inside.  You've got a few options for generating SBOMs:
 
-1) Scan a source code repo.  This works fine, but you'll miss runtime libraries from appservers and runtime platforms. You'll also include libraries that don't matter like test frameworks.  You'll also have no idea which libraries are actually active in the running application.
-2) Scan a filesystem for binaries. You'll still miss parts, because code can be located in a variety of different places. And you'll also probably include libraries that don't matter but happen to be on the filesystem.
-3) Analyze a running application. This is the most accurate approach as it captures the exact libraries used by the application, even if they are in the platform, appserver, plugins, or anywhere else. This approach can also include details of which libraries are active.
+1) __Scan a source code repo__ - This works fine, but you'll miss runtime libraries from appservers and runtime platforms. You'll also include libraries that don't matter like test frameworks.  You'll also have no idea which libraries are actually active in the running application.
+3) __Scan a filesystem for binaries__ - You'll still miss parts, because code can be located in a variety of different places. And you'll also probably include libraries that don't matter but happen to be on the filesystem.
+4) __Analyze a running application__ - This is the most accurate approach as it captures the exact libraries used by the application, even if they are in the platform, appserver, plugins, or anywhere else. This approach can also include details of which libraries are active.
 
 Advantages:
 * very fast, complete, and accurate
