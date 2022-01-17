@@ -1,6 +1,5 @@
 package com.contrastsecurity;
 
-import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -12,19 +11,14 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
-import sun.jvmstat.monitor.MonitoredHost;
 
 import net.bytebuddy.agent.ByteBuddyAgent;
-import net.bytebuddy.agent.ByteBuddyAgent.ProcessProvider;
 import picocli.CommandLine;
-import picocli.CommandLine.Command;
 
 public class Jbom implements Runnable {
 

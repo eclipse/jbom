@@ -3,9 +3,7 @@ package com.contrastsecurity;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.net.URLDecoder;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -65,7 +63,9 @@ public class Libraries {
             String filepath = decoded.substring( decoded.lastIndexOf(":") + 1);
             String parts[] = filepath.split( "!/" );
             String path = parts[0];
-
+            if(File.separator.equals("\\")) {
+                path = path.replace("\\", "/");
+            }
             if ( codesourceExamined.contains( path ) ) {
                 return;
             }
