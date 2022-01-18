@@ -46,36 +46,38 @@ Remember, you may be getting false results from other approaches. Scanning file 
 
 ## Examples
 
+Download the [latest release](https://github.com/Contrast-Security-OSS/jbom/releases/latest).
+
 Generate an SBOM for all Java processes running locally
   ```shell
-  java -javaagent:jbom-1.0.0.jar
+  java -javaagent:jbom-1.1.jar
   ```
   
 Generate an SBOM for all Java processes on a remote host
   ```shell
-  java -javaagent:jbom-1.0.0.jar -h 192.168.1.42
+  java -javaagent:jbom-1.1.jar -h 192.168.1.42
   ```
   
 Generate an SBOM for a local archive file (.jar, .war, .ear, .zip)
   ```shell
-  java -javaagent:jbom-1.0.0.jar -f mywebapp.jar
+  java -javaagent:jbom-1.1.jar -f mywebapp.jar
   ```
 
 Generate an SBOM for all archive files in a directory
   ```shell
-  java -javaagent:jbom-1.0.0.jar -f mywebapp
+  java -javaagent:jbom-1.1.jar -f mywebapp
   ```
   
 Generate an SBOM for all archive files in a remote directory
   ```shell
-  java -javaagent:jbom-1.0.0.jar -h 192.168.1.42 -d /var/tomcat/webapps
+  java -javaagent:jbom-1.1.jar -h 192.168.1.42 -d /var/tomcat/webapps
   ```
 
 
 
 ## Usage
 
-   ```shell
+```
 Usage: <main class> [-D] [-d=<dir>] [-f=<file>] [-h=<host>] [-o=<outputDir>]
                     [-p=<pid>] [-P=<pass>] [-r=<remoteDir>] [-t=<tag>]
                     [-U=<user>] [-x=<exclude>]
@@ -109,8 +111,8 @@ We welcome pull requests and issues. Thanks!
 
 This software is licensed under the Apache 2 license
 
-Copyright 2021 Contrast Security - https://contrastsecurity.com
+Copyright 2021 [Contrast Security](https://contrastsecurity.com) - https://contrastsecurity.com
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this project except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
+Licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0) (the "License"); you may not use this project except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
