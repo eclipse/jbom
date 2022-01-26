@@ -23,6 +23,10 @@ Advantages:
 * handles nested jar, war, ear, and zip files
 * no source code required
 
+Notice:
+* shaded or relocated classes can't be tracked back to their original jar (suggestions?)
+
+
 ![jbom-screenshot](https://github.com/Contrast-Security-OSS/jbom/blob/main/resources/jbom-screenshot.png?raw=true)
 
 
