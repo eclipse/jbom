@@ -44,9 +44,15 @@ public class Remote {
             FileInputStream fis = new FileInputStream(f);
             channel.put(fis, f.getName() );
             fis.close();
-        } finally {
-            channel.disconnect();
-            session.disconnect();
+        } catch( JSchException e ) {
+            Logger.log( "Error: " + e.getMessage() );
+       } finally {
+            if ( channel != null ) {
+                channel.disconnect();
+            }
+            if ( session != null ) {
+                session.disconnect();
+            }
         }
     }
 
@@ -68,7 +74,7 @@ public class Remote {
                 }
 
                 String remoteFile = remoteDir + "/" + en.getFilename();
-                String localFile = localDir + "/" + host + "-" + en.getFilename();
+                String localFile = localDir + "/" + en.getFilename();
                 if ( en.getFilename().endsWith( ".jar" ) ) {
                     channel.rm( remoteFile );
                 }
@@ -77,12 +83,17 @@ public class Remote {
                 channel.rm( remoteFile );
                 files.add( localFile );
             }
-        } catch( Exception e ) {
-            Logger.log( "Error during download" );
-            e.printStackTrace();
+        } catch( JSchException e ) {
+            Logger.log( "Error: " + e.getMessage() );
+        } catch (SftpException e) {
+            Logger.log( "Error: " + e.getMessage() );
         } finally {
-            channel.disconnect();
-            session.disconnect();
+            if ( channel != null ) {
+                channel.disconnect();
+            }
+            if ( session != null ) {
+                session.disconnect();
+            }
         }
         return files;
     }
@@ -135,9 +146,15 @@ public class Remote {
             Logger.debug("output: " + outputBuffer.toString("UTF-8"));
             Logger.debug("error : " + errorBuffer.toString("UTF-8"));
             Logger.debug( "=======================================");
+        } catch( JSchException e ) {
+            Logger.log( "Error: " + e.getMessage() );
         } finally {
-            channel.disconnect();
-            session.disconnect();
+            if ( channel != null ) {
+                channel.disconnect();
+            }
+            if ( session != null ) {
+                session.disconnect();
+            }
         }
         return outputBuffer.toString("UTF-8");
    }
