@@ -1,6 +1,5 @@
 package com.contrastsecurity;
 
-import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
@@ -29,9 +28,7 @@ import org.zeroturnaround.exec.stream.LogOutputStream;
 import sun.jvmstat.monitor.MonitoredHost;
 
 import net.bytebuddy.agent.ByteBuddyAgent;
-import net.bytebuddy.agent.ByteBuddyAgent.ProcessProvider;
 import picocli.CommandLine;
-import picocli.CommandLine.Command;
 
 public class Jbom implements Runnable {
     
@@ -128,7 +125,7 @@ public class Jbom implements Runnable {
 
     public void doLocalList( String exclude ) {
         try {
-            Map<String, String> processes = getProcesses( exclude );
+            Map<String, String> processes = getJavaProcesses( exclude );
             Logger.log( "Detected " + processes.size() + " local Java process" + ( processes.size()==1 ? "" : "es" ) );
             for ( String procid : processes.keySet() ) {
                 Logger.log( "  " + procid + " (" + processes.get( procid ) + ")" );
@@ -142,7 +139,7 @@ public class Jbom implements Runnable {
     public void doLocalProcess(String pid, String exclude, String outputDir, String tag) {
         if ( pid.equals( "all" ) ) {
             try {
-                Map<String, String> processes = getProcesses( exclude );
+                Map<String, String> processes = getJavaProcesses( exclude );
                 Logger.log( "Detected "+processes.size()+" local Java process" + ( processes.size()==1 ? "" : "es" ) );
                 int count = 1;
                 for ( String procid : processes.keySet() ) {
@@ -353,7 +350,7 @@ public class Jbom implements Runnable {
                 odir.mkdirs();
             }
             List<String> files = remote.download( host, remoteDir, outputDir );
-            Logger.log( "Detected " + files.size() + " remote SBOM" + ( files.size() != 1 ? "s" : "" ) );
+            Logger.log( "Generating " + files.size() + " remote SBOM" + ( files.size() != 1 ? "s" : "" ) );
             for ( String file : files ) {
                 Logger.log( "  - " + file );
             }
@@ -365,7 +362,7 @@ public class Jbom implements Runnable {
     }
 
 
-    // public Map<String, String> getProcessesOld( String exclude ) throws Exception {
+    // public Map<String, String> getJavaProcesses( String exclude ) throws Exception {
     //     Map<String,String> map = new HashMap<String, String>();
     //     List<VirtualMachineDescriptor> vms = VirtualMachine.list();
     //     vms.stream()
@@ -380,7 +377,7 @@ public class Jbom implements Runnable {
     //     return map;
     // }
 
-    public Map<String, String> getProcesses( String exclude ) throws Exception {
+    public Map<String, String> getJavaProcesses( String exclude ) throws Exception {
         Map<String, String> map = new TreeMap<String,String>();
         new ProcessExecutor().command("jcmd", "-l")
         .redirectOutput(new LogOutputStream() {
