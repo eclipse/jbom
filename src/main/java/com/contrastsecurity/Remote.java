@@ -3,6 +3,7 @@ package com.contrastsecurity;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,9 @@ import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpException;
 
 public class Remote {
 
@@ -26,7 +29,7 @@ public class Remote {
         this.pass = pass;
     }
 
-    public void upload( String remoteDir, File f ) {
+    public void upload( String remoteDir, File f ) throws JSchException, IOException, SftpException {
         Logger.debug( "Remote upload: " + f.getAbsolutePath() + " to " + remoteDir );
 
         Session session = null;
@@ -41,9 +44,6 @@ public class Remote {
             FileInputStream fis = new FileInputStream(f);
             channel.put(fis, f.getName() );
             fis.close();
-        } catch( Exception e ) {
-            Logger.log( "Error uploading " + f.getName() + " to " + remoteDir );
-            e.printStackTrace();
         } finally {
             channel.disconnect();
             session.disconnect();
@@ -51,7 +51,7 @@ public class Remote {
     }
 
 
-    public List<String> download( String host, String remoteDir, String localDir ) {
+    public List<String> download( String host, String remoteDir, String localDir ) throws JSchException, IOException {
         Logger.debug( "Remote download: " + remoteDir + " to " + localDir );
 
         Session session = null;
@@ -87,27 +87,26 @@ public class Remote {
         return files;
     }
 
-    public void rmdir( String dir ) {
+    public void rmdir( String dir ) throws JSchException, IOException {
         exec( "rm -rf " + dir );
     }
 
 
-    public void exec(String command) {
+    public String exec(String command) throws JSchException, IOException {
         Logger.debug( "Remote exec: " + command );
         Session session = null;
         ChannelExec channel = null;
+        session = getSession();
+        channel = (ChannelExec)session.openChannel("exec");
+        ByteArrayOutputStream outputBuffer = new ByteArrayOutputStream();
+        ByteArrayOutputStream errorBuffer = new ByteArrayOutputStream();
+        
         try {
-            session = getSession();
-            channel = (ChannelExec)session.openChannel("exec");
-
             channel.setCommand( command );
             channel.connect();
 
             InputStream in = channel.getInputStream();
             InputStream err = channel.getExtInputStream();
-            
-            ByteArrayOutputStream outputBuffer = new ByteArrayOutputStream();
-            ByteArrayOutputStream errorBuffer = new ByteArrayOutputStream();
             
             byte[] tmp = new byte[1024];
             while (true) {
@@ -136,23 +135,21 @@ public class Remote {
             Logger.debug("output: " + outputBuffer.toString("UTF-8"));
             Logger.debug("error : " + errorBuffer.toString("UTF-8"));
             Logger.debug( "=======================================");
-        } catch( Exception e ) {
-            Logger.log( "Error executing " + command );
-            Logger.log( "  " + e.getMessage() );
         } finally {
             channel.disconnect();
             session.disconnect();
         }
+        return outputBuffer.toString("UTF-8");
    }
 
-    public ChannelSftp getSftpChannel( Session session ) throws Exception {
+    public ChannelSftp getSftpChannel( Session session ) throws JSchException {
         Channel channel = session.openChannel("sftp");
         channel.connect();
         ChannelSftp sftpChannel = (ChannelSftp)channel;
         return sftpChannel;
     }
 
-    public Session getSession() throws Exception {
+    public Session getSession() throws JSchException {
         Session session = new JSch().getSession(user, host, 22);
         session.setPassword(pass);
         session.setConfig("PreferredAuthentications", "publickey,keyboard-interactive,password");

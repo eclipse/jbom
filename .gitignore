@@ -2,5 +2,6 @@
 .vscode/
 .idea/
 /target
-/sbom
+/jbom
 dependency-reduced-pom.xml
+test.sh
