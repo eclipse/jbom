@@ -2,6 +2,7 @@ package com.contrastsecurity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.packageurl.PackageURL;
@@ -79,14 +80,18 @@ public class Library extends Component implements Comparable<Library> {
     }
 
     @Override
-    public final boolean equals(Object o) {
-        Library that = (Library)o;
-        return this.jar.equals(that.jar);
+    public boolean equals(Object o) {
+        if(o instanceof Library) {
+            Library that = (Library) o;
+            return (this.getName() + this.getVersion() + this.getGroup()).equals(that.getName() + that.getVersion() + that.getGroup());
+        } else {
+            return false;
+        }
     }
 
     @Override
-    public final int hashCode() {
-        return jar.hashCode();
+    public int hashCode() {
+        return Objects.hash(this.getName()+this.getVersion()+this.getGroup());
     }
 
     @Override

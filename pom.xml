@@ -61,6 +61,13 @@
 			<artifactId>picocli</artifactId>
 			<version>4.6.2</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.15</version>
+			<scope>test</scope>
+		</dependency>
+
 
 	</dependencies>
 

@@ -16,6 +16,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
+import java.util.stream.Collectors;
 
 import com.github.packageurl.PackageURL;
 
@@ -32,6 +33,8 @@ public class Libraries {
     private Set<String> codesourceExamined = new HashSet<>();
     private Set<Component> libraries = new HashSet<>();
     private Set<org.cyclonedx.model.Dependency> dependencies = new HashSet<>();
+    private Hash rootSHA1;
+    private Hash rootMD5;
 
     public void runScan(File jarPath) throws Exception {
         addAllLibraries( null, jarPath.getAbsolutePath() );
@@ -72,41 +75,33 @@ public class Libraries {
             codesourceExamined.add( path );
 
             File f = new File( path );
-            Library lib = new Library( parts[parts.length-1] );  // last segment
-            lib.parsePath( path );
-            lib.setType( Library.Type.LIBRARY );
-            lib.addProperty( "codesource", path );
 
-            Logger.debug( "MAIN: " + codesource );
-
-            // add Contrast custom properties
-            lib.addProperty("source", "Contrast Security - https://contrastsecurity.com");
-            lib.addProperty("tool", "jbom - https://github.com/Contrast-Security-OSS/jbom");
-            lib.setScope( Scope.REQUIRED );
-
-            libraries.add( lib );
-            invoked.add( lib );
-
-            JarInputStream jis1 = new JarInputStream( new FileInputStream( f ) );
-            String sha1 = hash( jis1, MessageDigest.getInstance("SHA1") );
-            lib.addHash( new Hash( Hash.Algorithm.SHA1, sha1 ) );
+            String sha1 = hash( new FileInputStream( f ), MessageDigest.getInstance("SHA1") );
+            rootSHA1 = new Hash( Hash.Algorithm.SHA1, sha1 );
             
-            JarInputStream jis2 = new JarInputStream( new FileInputStream( f ) );
-            String md5 = hash( jis2, MessageDigest.getInstance("MD5") );
-            lib.addHash( new Hash( Hash.Algorithm.MD5, md5 ) );
-
-            lib.addProperty( "maven", "https://search.maven.org/search?q=1:" + sha1 );
+            String md5 = hash( new FileInputStream( f ), MessageDigest.getInstance("MD5") );
+            rootMD5 = new Hash( Hash.Algorithm.MD5, md5 );
 
             // scan for nested libraries
             JarInputStream jis3 = new JarInputStream( new FileInputStream( f ) );
             JarFile jarfile = new JarFile( f );
             scan( jarfile, jis3, f.getAbsolutePath() );
+            addRootHashesToRootJar();
         } catch( Exception e ) {
             Logger.log( "The jbom project needs your help to deal with unusual CodeSources." );
             Logger.log( "Report issue here: https://github.com/Contrast-Security-OSS/jbom/issues/new/choose" );
             Logger.log( "Please include:" );
             Logger.log( "  CodeSource: " + codesource );
             e.printStackTrace();
+        }
+    }
+
+    private void addRootHashesToRootJar() {
+        for( Component lib : libraries.stream()
+                .filter(lib-> lib.getHashes()==null||lib.getHashes().isEmpty())
+                .collect(Collectors.toList())) {
+            lib.addHash(rootSHA1);
+            lib.addHash(rootMD5);
         }
     }
 
@@ -119,6 +114,26 @@ public class Libraries {
                 } catch( Exception e ) {
                     Logger.log( "Problem extracting metadata from " + entry.getName() + " based on " + codesource + ". Continuing." );
                     e.printStackTrace();
+                }
+            } else if ( isPom(entry)) {
+                try {
+                    Library innerlib = new Library();
+                    // FIXME: set Scope.EXCLUDED for non-invoked libraries
+                    innerlib.setScope( Scope.REQUIRED );
+                    innerlib.parsePath( entry.getName() );
+                    innerlib.addProperty( "codesource", jarFile.getName() + "!/" + entry.getName() );
+                    libraries.add( innerlib );
+                    innerlib.setType( Library.Type.LIBRARY );
+                    parsePom( jis, innerlib );
+                    try {
+                        if ( innerlib.getGroup() != null && innerlib.getName() != null ) {
+                            innerlib.setPurl(new PackageURL( PackageURL.StandardTypes.MAVEN, innerlib.getGroup(), innerlib.getName(), innerlib.getVersion(), null, null));
+                        }
+                    } catch( Exception e ) {
+                        // continue
+                    }
+                } catch( Exception e ) {
+                    // Logger.log( "Problem parsing POM from " + nestedName + " based on " + codesource + ". Continuing." );
                 }
             }
         }
@@ -162,7 +177,7 @@ public class Libraries {
         InputStream nis4 = jarFile.getInputStream( entry );
         JarInputStream innerJis4 = new JarInputStream( nis4 );
         while ((entry = innerJis4.getNextJarEntry()) != null) {
-            if ( entry.getName().endsWith( "/pom.xml" ) ) {
+            if ( isPom(entry) ) {
                 try {
                     parsePom( innerJis4, innerlib );
                 } catch( Exception e ) {
@@ -179,6 +194,10 @@ public class Libraries {
             // continue
         }
 
+    }
+
+    private boolean isPom(JarEntry entry){
+        return !entry.isDirectory()&&entry.getName().endsWith("/pom.xml");
     }
 
 
