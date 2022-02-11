@@ -164,24 +164,27 @@ public class Jbom implements Runnable {
             attach( pid, name);
         }
     }
-
     public Libraries doLocalFile(String file, String outputDir) {
+        File f = new File( file );
+        return doLocalFile(f,outputDir);
+    }
+
+
+    public Libraries doLocalFile(File file, String outputDir) {
         Logger.log( "Analyzing file " + file );
         Libraries libs = new Libraries();
-
-        File f = new File( file );
-        if ( !f.exists() ) {
+        if ( !file.exists() ) {
             Logger.log( "Could not find file: " + file );
         }
-        if ( !f.isFile() ) {
+        if ( !file.isFile() ) {
             Logger.log( "Could not open file: " + file );
         }
-        if ( !libs.isArchive( file ) ) {
+        if ( !libs.isArchive( file.getAbsolutePath() ) ) {
             Logger.log( "File does not appear to be an archive: " + file );
         }
 
         try{
-            String name = file;
+            String name = file.getName();
             int idx = name.lastIndexOf('/');
             if ( idx != -1 ) {
                 name = name.substring( idx + 1 );
@@ -191,7 +194,7 @@ public class Jbom implements Runnable {
                 name = name.substring( 0, idx );
             }
             name = outputDir + "/jbom-" + name + ( tag == null ? "" : "-" +tag ) + ".json";
-            libs.runScan( f );
+            libs.runScan( file );
             libs.save(name);
         }catch(Exception e){
             e.printStackTrace();
