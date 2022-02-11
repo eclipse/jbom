@@ -54,27 +54,27 @@ Download the [latest release](https://github.com/Contrast-Security-OSS/jbom/rele
 
 Generate an SBOM for all Java processes running locally
   ```shell
-  java -javaagent:jbom-1.1.jar
+  java -jar:jbom-1.1.jar
   ```
   
 Generate an SBOM for all Java processes on a remote host
   ```shell
-  java -javaagent:jbom-1.1.jar -h 192.168.1.42
+  java -jar:jbom-1.1.jar -h 192.168.1.42
   ```
   
 Generate an SBOM for a local archive file (.jar, .war, .ear, .zip)
   ```shell
-  java -javaagent:jbom-1.1.jar -f mywebapp.jar
+  java -jar:jbom-1.1.jar -f mywebapp.jar
   ```
 
 Generate an SBOM for all archive files in a directory
   ```shell
-  java -javaagent:jbom-1.1.jar -f mywebapp
+  java -jar:jbom-1.1.jar -f mywebapp
   ```
   
 Generate an SBOM for all archive files in a remote directory
   ```shell
-  java -javaagent:jbom-1.1.jar -h 192.168.1.42 -d /var/tomcat/webapps
+  java -jar:jbom-1.1.jar -h 192.168.1.42 -d /var/tomcat/webapps
   ```
 
 
@@ -82,7 +82,7 @@ Generate an SBOM for all archive files in a remote directory
 ## Usage
 
 ```
-Usage: <main class> [-D] [-d=<dir>] [-f=<file>] [-h=<host>] [-o=<outputDir>]
+Usage: java -jar sbom-1.1.jar [-D] [-d=<dir>] [-f=<file>] [-h=<host>] [-o=<outputDir>]
                     [-p=<pid>] [-P=<pass>] [-r=<remoteDir>] [-t=<tag>]
                     [-U=<user>] [-x=<exclude>]
   -d, --dir=<dir>              Directory to be scanned
