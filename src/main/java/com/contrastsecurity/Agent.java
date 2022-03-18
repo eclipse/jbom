@@ -2,6 +2,7 @@ package com.contrastsecurity;
 
 import java.lang.instrument.Instrumentation;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
@@ -46,7 +47,8 @@ public class Agent {
 							URL url = cs.getLocation();
 							if ( url != null ) {
 								String codesource = url.toString();
-								libs.addAllLibraries( clazz, codesource );
+								String decoded = URLDecoder.decode( codesource, "UTF-8" );
+								libs.addAllLibraries( clazz, decoded );
 							}
 						}
 					}

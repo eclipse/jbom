@@ -62,8 +62,7 @@ public class Libraries {
         }
 
         try {
-            String decoded = URLDecoder.decode( codesource, "UTF-8" );
-            String filepath = decoded.substring( decoded.lastIndexOf(":") + 1);
+            String filepath = codesource.substring( codesource.lastIndexOf(":") + 1);
             String parts[] = filepath.split( "!/" );
             String path = parts[0];
             if(File.separator.equals("\\")) {

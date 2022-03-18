@@ -3,6 +3,7 @@
 .idea/
 /target
 /jbom
+/demo
 dependency-reduced-pom.xml
 test.sh
 sbom.json

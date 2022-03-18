@@ -3,7 +3,7 @@
 <p align="center"><b>
 <br>
 <br>
-jbom generates SBOMs for all JVMs running on a host
+jbom generates Runtime and Static SBOMs for local and remote Java apps
 <br>
 <br>
 </b></p>
@@ -11,8 +11,8 @@ jbom generates SBOMs for all JVMs running on a host
 Every project should create a Software Bill of Materials (SBOM) and make it available, so that people know what ingredients are inside.  You've got a few options for generating SBOMs:
 
 1) __Scan a source code repo__ - This works fine, but you'll miss runtime libraries from appservers and runtime platforms. You'll also include libraries that don't matter like test frameworks.  You'll also have no idea which libraries are actually active in the running application.
-3) __Scan a filesystem for binaries__ - You'll still miss parts, because code can be located in a variety of different places. And you'll also probably include libraries that don't matter but happen to be on the filesystem.
-4) __Analyze a running application__ - This is the most accurate approach as it captures the exact libraries used by the application, even if they are in the platform, appserver, plugins, or anywhere else. This approach can also include details of which libraries are active.
+2) __Scan a filesystem for binaries__ - You'll still miss parts, because code can be located in a variety of different places. And you'll also probably include libraries that don't matter but happen to be on the filesystem.
+3) __Analyze a running application__ - This is the most accurate approach as it captures the exact libraries used by the application, even if they are in the platform, appserver, plugins, or anywhere else. This approach can also include details of services invoked and which libraries are active.
 
 Advantages:
 * very fast, complete, and accurate
@@ -20,12 +20,9 @@ Advantages:
 * works on both running apps/APIs and binaries
 * finds all libraries, including platform, appserver, plug-in, and dynamic sources.
 * doesn't report test or other libraries not present at runtime
-* handles nested jar, war, ear, and zip files
+* handles nested jar, war, ear, and zip files (including Spring)
+* handles jars using common shaded and relocation techniques
 * no source code required
-
-Notice:
-* shaded or relocated classes can't be tracked back to their original jar (suggestions?)
-
 
 ![jbom-screenshot](https://github.com/Contrast-Security-OSS/jbom/blob/main/resources/jbom-screenshot.png?raw=true)
 
@@ -54,27 +51,27 @@ Download the [latest release](https://github.com/Contrast-Security-OSS/jbom/rele
 
 Generate an SBOM for all Java processes running locally
   ```shell
-  java -jar:jbom-1.1.jar
+  java -jar:jbom-1.2.jar
   ```
   
 Generate an SBOM for all Java processes on a remote host
   ```shell
-  java -jar:jbom-1.1.jar -h 192.168.1.42
+  java -jar:jbom-1.2.jar -h 192.168.1.42
   ```
   
 Generate an SBOM for a local archive file (.jar, .war, .ear, .zip)
   ```shell
-  java -jar:jbom-1.1.jar -f mywebapp.jar
+  java -jar:jbom-1.2.jar -f mywebapp.jar
   ```
 
 Generate an SBOM for all archive files in a directory
   ```shell
-  java -jar:jbom-1.1.jar -f mywebapp
+  java -jar:jbom-1.2.jar -f mywebapp
   ```
   
 Generate an SBOM for all archive files in a remote directory
   ```shell
-  java -jar:jbom-1.1.jar -h 192.168.1.42 -d /var/tomcat/webapps
+  java -jar:jbom-1.2.jar -h 192.168.1.42 -d /var/tomcat/webapps
   ```
 
 
@@ -82,7 +79,7 @@ Generate an SBOM for all archive files in a remote directory
 ## Usage
 
 ```
-Usage: java -jar sbom-1.1.jar [-D] [-d=<dir>] [-f=<file>] [-h=<host>] [-o=<outputDir>]
+Usage: java -jar sbom-1.2.jar [-D] [-d=<dir>] [-f=<file>] [-h=<host>] [-o=<outputDir>]
                     [-p=<pid>] [-P=<pass>] [-r=<remoteDir>] [-t=<tag>]
                     [-U=<user>] [-x=<exclude>]
   -d, --dir=<dir>              Directory to be scanned
@@ -107,7 +104,7 @@ We welcome pull requests and issues. Thanks!
    ```shell
    git clone 
    mvn clean install
-   java -jar target/jbom-x.x.x.jar
+   java -jar target/jbom-1.2.jar
    ``` 
 
 
