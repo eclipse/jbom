@@ -26,10 +26,12 @@ jbom advantages:
 * handles jars using common shaded and relocation techniques
 * no source code required
 
+[Discussion and jbom Demo on YouTube](https://www.youtube.com/watch?v=B3CvDsnGnXI&t=6s&ab_channel=OWASPLondon)
+
 ![jbom-screenshot](https://github.com/Contrast-Security-OSS/jbom/blob/main/resources/jbom-screenshot.png?raw=true)
 
 
-## Why should you use instrumentation-based security tools
+## Why should you use RUNTIME security tools
 
 Instrumentation has been around for decades, is widely used in performance tools, debugging and profiling, and app frameworks. Many security tools scan from the 'outside-in' and don't have the full context of the running application.  This leads to false-positives, false-negatives, and long scan times.
 
@@ -44,7 +46,6 @@ Remember, you may be getting false results from other approaches. Scanning file 
 * library could be many different versions with different classloaders in a single app
 * library could be masked by use of slf4j or other layers
 * library could be renamed, recompiled, or otherwise changed
-
 
 
 ## Examples
