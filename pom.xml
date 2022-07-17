@@ -124,8 +124,8 @@
 										<Main-Class>com.contrastsecurity.Jbom</Main-Class>
 										<Premain-Class>com.contrastsecurity.Agent</Premain-Class>
 										<Agent-Class>com.contrastsecurity.Agent</Agent-Class>
-										<Can-Redefine-Classes>true</Can-Redefine-Classes>
-										<Can-Retransform-Classes>true</Can-Retransform-Classes>
+										<Can-Redefine-Classes>false</Can-Redefine-Classes>
+										<Can-Retransform-Classes>false</Can-Retransform-Classes>
 										<Can-Set-Native-Method-Prefix>false</Can-Set-Native-Method-Prefix>
 										<Boot-Class-Path>jbom-${project.version}.jar</Boot-Class-Path>
 									</manifestEntries>
