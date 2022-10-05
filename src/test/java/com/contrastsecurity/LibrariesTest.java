@@ -24,7 +24,6 @@ public class LibrariesTest {
         Libraries libs = jbom.doLocalFile( jar, "target/test" );
         assertTrue( "Incorrect number of libraries found. " + libs.getLibraries().size() + " instead of 135", libs.getLibraries().size() == 135 );
         compareHashToFile(jar,libs,"petclinic");
-
     }
 
     @Test
@@ -34,7 +33,14 @@ public class LibrariesTest {
         Libraries libs = jbom.doLocalFile( jar, "target/test" );
         assertTrue( "Incorrect number of libraries found. " + libs.getLibraries().size() + " instead of 102", libs.getLibraries().size() == 102 );
         compareHashToFile(jar,libs,"callback");
+    }
 
+    @Test
+    public void testNoComponents() throws Exception {
+        File jar = getPathToResource("/nocomponents.jar");
+        Jbom jbom = new Jbom();
+        Libraries libs = jbom.doLocalFile( jar, "target/test" );
+        assertTrue( "Incorrect number of libraries found. " + libs.getLibraries().size() + " instead of 0", libs.getLibraries().size() == 0 );
     }
 
     @Test
@@ -52,7 +58,6 @@ public class LibrariesTest {
         Jbom jbom = new Jbom();
         Libraries libs = jbom.doLocalDirectory( jar.getAbsolutePath(), "target/test" );
         assertTrue( "Incorrect number of libraries found. " + libs.getLibraries().size() + " instead of 265", libs.getLibraries().size() == 265 );
-
     }
 
     private File getPathToResource(String path) throws URISyntaxException {

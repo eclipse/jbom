@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
@@ -59,7 +60,12 @@ public class CycloneDXModel extends Bom {
 	
 	public void save( String filename ) {
 		try {
-			Logger.log( "Saving SBOM with " + getComponents().size() + " components to " + filename );
+			List<Component> components = getComponents();
+			int size = 0;
+			if ( components != null ) {
+				size = components.size();
+			}
+			Logger.log( "Saving SBOM with " + size + " components to " + filename );
 			BomJsonGenerator bomGenerator = BomGeneratorFactory.createJson(CycloneDxSchema.VERSION_LATEST, this);
 			String bomString = bomGenerator.toJsonString();			
 			FileUtils.write(new File(filename), bomString, Charset.forName("UTF-8"), false);		
