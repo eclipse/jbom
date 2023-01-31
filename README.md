@@ -54,27 +54,27 @@ Download the [latest release](https://github.com/Contrast-Security-OSS/jbom/rele
 
 Generate an SBOM for all Java processes running locally
   ```shell
-  java -jar:jbom-1.2.jar
+  java -jar jbom-1.2.jar
   ```
   
 Generate an SBOM for all Java processes on a remote host
   ```shell
-  java -jar:jbom-1.2.jar -h 192.168.1.42
+  java -jar jbom-1.2.jar -h 192.168.1.42
   ```
   
 Generate an SBOM for a local archive file (.jar, .war, .ear, .zip)
   ```shell
-  java -jar:jbom-1.2.jar -f mywebapp.jar
+  java -jar jbom-1.2.jar -f mywebapp.jar
   ```
 
 Generate an SBOM for all archive files in a directory
   ```shell
-  java -jar:jbom-1.2.jar -f mywebapp
+  java -jar jbom-1.2.jar -f mywebapp
   ```
   
 Generate an SBOM for all archive files in a remote directory
   ```shell
-  java -jar:jbom-1.2.jar -h 192.168.1.42 -d /var/tomcat/webapps
+  java -jar jbom-1.2.jar -h 192.168.1.42 -d /var/tomcat/webapps
   ```
 
 
