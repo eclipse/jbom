@@ -3,29 +3,18 @@ package com.contrastsecurity;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import com.sun.tools.attach.VirtualMachine;
-import com.sun.tools.attach.VirtualMachineDescriptor;
 
 import org.apache.commons.io.LineIterator;
 import org.zeroturnaround.exec.ProcessExecutor;
 import org.zeroturnaround.exec.stream.LogOutputStream;
-
-import sun.jvmstat.monitor.MonitoredHost;
 
 import net.bytebuddy.agent.ByteBuddyAgent;
 import picocli.CommandLine;
@@ -269,10 +258,6 @@ public class Jbom implements Runnable {
         }
     }
 
-
-
-
-
     public void doRemoteList( String exclude, String host, String user, String pass ) {
         Logger.log( "Listing remote JVMs on " + host );
         java.io.Console console = System.console();
@@ -317,8 +302,6 @@ public class Jbom implements Runnable {
             e.printStackTrace();
         }
     }
-
-
 
     public void doRemoteProcess(String pid, String exclude, String outputDir, String host, String user, String pass, String remoteDir) {
         Logger.log( "Analyzing remote JVMs on " + host );
@@ -406,9 +389,6 @@ public class Jbom implements Runnable {
         return map;
     }
 
-
-
-
   public void attach( String pid, String path) {
 
         String myPid = ByteBuddyAgent.ProcessProvider.ForCurrentVm.INSTANCE.resolve();
@@ -437,7 +417,6 @@ public class Jbom implements Runnable {
         Logger.log( "     Saving SBOM to " + path );
     }
 
-
     private static void attachWithFallback(File agentJarFile, String pid, String agentArgs) {
         try {
             ByteBuddyAgent.attach(agentJarFile, pid, agentArgs, JbomAttachmentProvider.get());
@@ -454,9 +433,6 @@ public class Jbom implements Runnable {
         }
     }
 
-  
-
-
     // list all files from this path
     public static List<Path> listFiles(Path path) throws IOException {
         List<Path> result;
@@ -466,8 +442,6 @@ public class Jbom implements Runnable {
         }
         return result;
     }
-
-
 
     private void printBanner() {
         Logger.log( "" );
@@ -481,7 +455,7 @@ public class Jbom implements Runnable {
         Logger.log( "     by Contrast Security - https://contrastsecurity.com" );
         Logger.log( "" );
         Logger.log( "      jbom generates SBOMs for all JVMs running on a host" );
-        Logger.log( "         https://github.com/Contrast-Security-OSS/jbom" );
+        Logger.log( "         https://projects.eclipse.org/projects/technology.jbom" );
         Logger.log( "" );
     }
 

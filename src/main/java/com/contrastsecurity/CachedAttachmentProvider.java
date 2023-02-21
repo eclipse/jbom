@@ -1,4 +1,5 @@
 package com.contrastsecurity;
+
 import net.bytebuddy.agent.ByteBuddyAgent;
 
 public class CachedAttachmentProvider implements ByteBuddyAgent.AttachmentProvider {
