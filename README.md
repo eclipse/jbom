@@ -69,7 +69,7 @@ Generate an SBOM for a local archive file (.jar, .war, .ear, .zip)
 
 Generate an SBOM for all archive files in a directory
   ```shell
-  java -jar jbom-1.2.jar -f mywebapp
+  java -jar jbom-1.2.jar -d mywebapp
   ```
   
 Generate an SBOM for all archive files in a remote directory
