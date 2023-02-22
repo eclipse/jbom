@@ -9,7 +9,7 @@
 	<version>1.2.2-SNAPSHOT</version>
 
 	<name>jbom</name>
-	<description>Eclipse jbom generates "Runtime SBOMs" by directly measuring library use in a running application (both local and remote).</description>
+	<description>Eclipse jbom generates "Runtime SBOMs" by directly measuring libraries and their use in running Java software (both local and remote).</description>
 	<url>https://projects.eclipse.org/projects/technology.jbom</url>
 
 	<licenses>
@@ -25,7 +25,6 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
-
 		<fluido.version>2.0.0-M3</fluido.version>
 	</properties>
 
@@ -109,16 +108,6 @@
 	</dependencies>
 
 	<build>
-
-		<resources>
-			<!-- This adds a jdom.properties file to the classpath with the jbom version installed, so the
-			     proper jbom version can be added to the generated SBOM. -->
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
-
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -140,7 +129,6 @@
 		</pluginManagement>
 
 		<plugins>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
