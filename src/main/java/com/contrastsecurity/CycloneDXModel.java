@@ -2,6 +2,7 @@ package com.contrastsecurity;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -33,17 +34,9 @@ public class CycloneDXModel extends Bom {
 		Metadata meta = new Metadata();
 		meta.setTimestamp( new Date() );
 		Tool jbom = new Tool();
-		jbom.setName("jbom - https://projects.eclipse.org/projects/technology.jbom");
-		jbom.setVendor("Contrast Security - https://contrastsecurity.com");
-		final Properties properties = new Properties();
-		try {
-			properties.load(CycloneDXModel.class.getClassLoader().getResourceAsStream("jdom.properties"));
-			jbom.setVersion(properties.getProperty("version"));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-			Logger.log("ERROR: can't find version property in jdom.properties file");
-			jbom.setVersion("unknown");
-		}
+		jbom.setName("jbom");
+		jbom.setVendor("Eclipse Foundation - https://projects.eclipse.org/projects/technology.jbom");
+		jbom.setVersion(getJbomVersion());
 		meta.setTools( new ArrayList<>(Arrays.asList(jbom)) );
 
 		String description = "Java";
@@ -68,6 +61,19 @@ public class CycloneDXModel extends Bom {
 		return meta;
 	}
 	
+	private static String getJbomVersion() {
+        String version = "unknown";
+		final Properties properties = new Properties();
+		try {
+			InputStream is = CycloneDXModel.class.getResourceAsStream("/jdom.properties");
+		    properties.load( is );
+            version = properties.getProperty("version");
+		} catch (Exception e) {
+		    // continue	
+		}
+		return version;
+	}
+
 	public void save( String filename ) {
 		try {
 			List<Component> components = getComponents();
