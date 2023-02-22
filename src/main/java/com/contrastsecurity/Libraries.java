@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.net.URLDecoder;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -18,18 +17,18 @@ import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
 import java.util.stream.Collectors;
 
-import com.github.packageurl.PackageURL;
-
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.cyclonedx.model.Component;
-import org.cyclonedx.model.Hash;
 import org.cyclonedx.model.Component.Scope;
+import org.cyclonedx.model.Hash;
+
+import com.github.packageurl.PackageURL;
 
 public class Libraries {
 
-    private Set<Component> invoked = new HashSet<>();
+	// FIXME: set Scope.EXCLUDED for non-invoked libraries - private Set<Component> invoked = new HashSet<>();
     private Set<String> codesourceExamined = new HashSet<>();
     private Set<Component> libraries = new HashSet<>();
     private Set<org.cyclonedx.model.Dependency> dependencies = new HashSet<>();
@@ -283,4 +282,3 @@ public class Libraries {
         return new String(hexChars);
     }
 }
-    

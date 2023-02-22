@@ -1,18 +1,19 @@
 package com.contrastsecurity;
 
-import static org.junit.Assert.*;
-
-
-import org.apache.commons.codec.digest.DigestUtils;
-import org.cyclonedx.model.Component;
-import org.cyclonedx.model.Hash;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Optional;
+
+import org.apache.commons.codec.digest.DigestUtils;
+import org.cyclonedx.model.Component;
+import org.cyclonedx.model.Hash;
+import org.junit.Test;
 
 
 public class LibrariesTest {
@@ -85,13 +86,5 @@ public class LibrariesTest {
     private String hashFileMD5(File path) throws IOException {
         return DigestUtils.md5Hex(new FileInputStream(path));
     }
-
-
-
-
-
-
-
-
 
 }

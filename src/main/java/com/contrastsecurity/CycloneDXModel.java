@@ -1,12 +1,14 @@
 package com.contrastsecurity;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
@@ -31,11 +33,19 @@ public class CycloneDXModel extends Bom {
 		Metadata meta = new Metadata();
 		meta.setTimestamp( new Date() );
 		Tool jbom = new Tool();
-		jbom.setName("jbom - https://github.com/Contrast-Security-OSS/jbom");
+		jbom.setName("jbom - https://projects.eclipse.org/projects/technology.jbom");
 		jbom.setVendor("Contrast Security - https://contrastsecurity.com");
-		jbom.setVersion("1.0.0");
+		final Properties properties = new Properties();
+		try {
+			properties.load(CycloneDXModel.class.getClassLoader().getResourceAsStream("jdom.properties"));
+			jbom.setVersion(properties.getProperty("version"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			Logger.log("ERROR: can't find version property in jdom.properties file");
+			jbom.setVersion("unknown");
+		}
 		meta.setTools( new ArrayList<>(Arrays.asList(jbom)) );
-		
+
 		String description = "Java";
 		String hostname = "unknown";
 		try {
@@ -43,14 +53,14 @@ public class CycloneDXModel extends Bom {
 			InetAddress.getLocalHost().getHostAddress() + " (" + 
 			InetAddress.getLocalHost().getHostName() + ")";
 		} catch( Exception e ) {
-			// continuue
+			// continue
 		}
 
 		Library appNode = new Library( hostname );
 		appNode.setType( Component.Type.APPLICATION );
 		appNode.setDescription( description );
 		meta.setComponent( appNode );
-	    
+
 		OrganizationalEntity manufacturer = new OrganizationalEntity();
 		manufacturer.setName( "Unknown" );
 		meta.setManufacture(manufacturer);
@@ -74,6 +84,5 @@ public class CycloneDXModel extends Bom {
 			e.printStackTrace();
 		}
 	}
-	
 
 }

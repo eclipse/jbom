@@ -1,6 +1,10 @@
+.classpath
 .DS_Store
 .vscode/
 .idea/
+.java-version
+.project
+.settings
 /target
 /jbom
 /demo
