@@ -141,7 +141,7 @@ public class Jbom implements Runnable {
                 for( String procid : processes.keySet() ) {
                     Logger.log( "" );
                     Logger.log( "  " + count++ + ": " + procid + " (" + processes.get( procid ) + ")" );
-                    String name = outputDir + "/jbom" + ( tag == null ? "" : "-" +tag ) + "-" + procid + ".json";
+                    String name = outputDir + "/" + ( tag == null ? "" : "-" +tag ) + "-" + procid + "-cyclonedx.json";
                     attach( procid, name );
                 }
             } catch( Exception e ) {
@@ -149,7 +149,7 @@ public class Jbom implements Runnable {
             }
         } else {
             Logger.log( "Analyzing local Java process with pid " + pid );
-            String name = outputDir + "/jbom" + ( tag == null ? "" : "-" +tag ) + "-" + pid + ".json";
+            String name = outputDir + "/" + ( tag == null ? "" : "-" +tag ) + "-" + pid + "-cyclonedx.json";
             attach( pid, name);
         }
     }
@@ -182,7 +182,7 @@ public class Jbom implements Runnable {
             if ( idx != -1 ) {
                 name = name.substring( 0, idx );
             }
-            name = outputDir + "/jbom-" + name + ( tag == null ? "" : "-" +tag ) + ".json";
+            name = outputDir + "/" + name + ( tag == null ? "" : "-" +tag ) + "-cyclonedx.json";
             libs.runScan( file );
             libs.save(name);
         }catch(Exception e){
@@ -198,7 +198,7 @@ public class Jbom implements Runnable {
         String dirname = path.getFileName().toString();
 
         try {
-            String name = outputDir + "/jbom-" + dirname + ( tag == null ? "" : "-" +tag ) + ".json";
+            String name = outputDir + "/" + dirname + ( tag == null ? "" : "-" +tag ) + "-cyclonedx.json";
             List<Path> paths = listFiles(path);
             for ( Path p : paths ) {
                 try {
