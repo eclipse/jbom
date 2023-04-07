@@ -58,7 +58,7 @@ public class LibrariesTest {
         File jar = getPathToResource("/");
         Jbom jbom = new Jbom();
         Libraries libs = jbom.doLocalDirectory( jar.getAbsolutePath(), "target/test" );
-        assertTrue( "Incorrect number of libraries found. " + libs.getLibraries().size() + " instead of 265", libs.getLibraries().size() == 265 );
+        assertTrue( "Incorrect number of libraries found. " + libs.getLibraries().size() + " instead of 266", libs.getLibraries().size() == 266 );
     }
 
     private File getPathToResource(String path) throws URISyntaxException {

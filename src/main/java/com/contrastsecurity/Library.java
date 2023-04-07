@@ -35,16 +35,35 @@ public class Library extends Component implements Comparable<Library> {
         this.setName( name );
     }
 
+    // fullpath should end in .jar, .war, .ear, .zip
     public void parsePath( String fullpath ) {
-        jar = fullpath.substring( fullpath.lastIndexOf("/") + 1 );
-        path = fullpath.substring( 0, fullpath.lastIndexOf("/") );
-
+        path = "";
+        jar = fullpath;
+        int lastslash = fullpath.lastIndexOf("/");
+        if ( lastslash != -1 ) {
+            path = fullpath.substring( 0, lastslash );
+            jar = fullpath.substring( lastslash + 1 );
+        }
         this.addProperty( "path", path );
         this.addProperty( "archive", jar );
+
         int sep = fullpath.lastIndexOf( "." );
         String fqn = fullpath.substring( 0, sep );
-        this.setName( fqn.substring( fqn.lastIndexOf( "/" ) + 1 ) );
-        this.setVersion( fqn.substring( fqn.lastIndexOf( "-" ) + 1 ) );
+
+        String name = fqn;
+        int lastslash2 = fqn.lastIndexOf( "/" );
+        if ( lastslash2 != -1 ) {
+            name = fqn.substring( lastslash2 + 1 );
+        }
+        this.setName( name );
+
+        String version = fqn;
+        int lastdash = fqn.lastIndexOf( "-" );
+        if ( lastdash != -1 ) {
+            version = fqn.substring( lastdash + 1 );
+        }
+        this.setVersion( version );
+        
         try {
             setPurl(new PackageURL("maven", this.getGroup(), this.getName(), this.getVersion(), null, null));
         } catch ( Exception e ) {

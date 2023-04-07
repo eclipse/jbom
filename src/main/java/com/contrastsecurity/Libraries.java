@@ -205,9 +205,9 @@ public class Libraries {
         }
         boolean isArchive = 
             filename.endsWith( ".jar" ) 
-            || filename.endsWith( "war" )
-            || filename.endsWith( "ear" )
-            || filename.endsWith( "zip" );
+            || filename.endsWith( ".war" )
+            || filename.endsWith( ".ear" )
+            || filename.endsWith( ".zip" );
         return isArchive;
     }
 
