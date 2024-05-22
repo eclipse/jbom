@@ -6,7 +6,7 @@
 	<groupId>com.contrastsecurity</groupId>
 	<artifactId>jbom</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2.2-SNAPSHOT</version>
+	<version>1.2.3-SNAPSHOT</version>
 
 	<name>jbom</name>
 	<description>Eclipse jbom generates "Runtime SBOMs" by directly measuring libraries and their use in running Java software (both local and remote).</description>

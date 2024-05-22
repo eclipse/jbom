@@ -27,16 +27,17 @@ public class CycloneDXModel extends Bom {
 	public CycloneDXModel() {
 		setVersion(1);
 		setMetadata( makeMetadata() );
-		setSerialNumber( UUID.randomUUID().toString() );
+		setSerialNumber( "urn:uuid:" + UUID.randomUUID().toString() );
 	}
 
 	public static Metadata makeMetadata() {
 		Metadata meta = new Metadata();
 		meta.setTimestamp( new Date() );
 		Tool jbom = new Tool();
+		String jbomVersion = getJbomVersion();
 		jbom.setName("jbom");
 		jbom.setVendor("Eclipse Foundation - https://projects.eclipse.org/projects/technology.jbom");
-		jbom.setVersion(getJbomVersion());
+		jbom.setVersion(jbomVersion);
 		meta.setTools( new ArrayList<>(Arrays.asList(jbom)) );
 
 		String description = "Java";
@@ -52,6 +53,7 @@ public class CycloneDXModel extends Bom {
 		Library appNode = new Library( hostname );
 		appNode.setType( Component.Type.APPLICATION );
 		appNode.setDescription( description );
+		appNode.setVersion( jbomVersion );
 		meta.setComponent( appNode );
 
 		OrganizationalEntity manufacturer = new OrganizationalEntity();
